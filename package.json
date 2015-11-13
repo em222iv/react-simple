@@ -1,0 +1,32 @@
+{
+  "name": "reactsimple",
+  "version": "0.0.0",
+  "description": "React course project",
+  "main": "index.js",
+  "scripts": {
+    "start": "browserify --debug -t [reactify --es6] src/app.js > bundle.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "github.com/em222iv/react-simple"
+  },
+  "keywords": [
+    "react",
+    "redux"
+  ],
+  "author": "erik magnusson",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/em222iv/react-simple/issues"
+  },
+  "homepage": "https://github.com/em222iv/react-simple",
+  "devDependencies": {
+    "react": "=0.14.0",
+    "react-dom": "=0.14.0",
+    "react-router": "=1.0.0-rc3",
+    "redux": "=3.0.4",
+    "react-redux": "=4.0.0",
+    "browserify": "=12.0.1",
+    "reactify": "=1.1.1"
+  }
+}

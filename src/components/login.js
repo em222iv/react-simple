@@ -2,7 +2,9 @@ var React = require('react'),
     ptypes = React.PropTypes,
     ReactRedux = require('react-redux'),
     actions = require('../actions'),
-    auth = require('../auth');
+    auth = require('../auth'),
+    Link = require('react-router').Link;
+
 
 this.divStyle = {
     width:200
@@ -25,22 +27,10 @@ var Login = React.createClass({
     handleLogout: function() {
         this.props.logout();
     },
-    componentWillMount: function() {
-        var user = {
-            username: "",
-            password: ""
-        };
-        auth.login("", "", (loggedIn) => {
-            if(loggedIn){
-                this.props.login(user);
-            }
-        });
-    },
     render: function(){
         return (
             <ul id="dropdown1" style={this.divStyle} className="dropdown-content">
-                <li><a href="#">sumtin'</a></li>
-                <li><a href="#">sumtin'moore</a></li>
+                <li><a href="#">Home</a></li>
                 <li className="divider"></li>
                 <li className="noCollaplse">
                     {(this.props.auth
@@ -56,8 +46,8 @@ var Login = React.createClass({
                 </li>
                 <li>
                     {(this.props.auth
-                            ?  <a href="#" onClick={this.handleLogout}>logout</a>
-                            :  <a href="#" onClick={this.handleLogin}>login</a>
+                            ?  <Link to="/" href="#" onClick={this.handleLogout}>logout</Link>
+                            :  <Link to="/" onClick={this.handleLogin}>login</Link>
                     )}
                 </li>
             </ul>
@@ -77,10 +67,6 @@ var mapDispatchToProps = function(dispatch){
         logout: function(){
             dispatch(actions.logout());
         },
-        token: function(){
-            var loginCall;
-            actions.token(loginCall, dispatch);
-        }
     }
 };
 

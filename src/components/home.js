@@ -1,11 +1,13 @@
 var React = require('react'),
     ptypes = React.PropTypes,
     ReactRedux = require('react-redux'),
+    Link = require('react-router').Link,
     actions = require('../actions');
 
 var Home = React.createClass({
     propTypes: {
-        login: ptypes.func.isRequired
+        auth: ptypes.bool.isRequired,
+        game: ptypes.func.isRequired,
     },
     render: function(){
         return (
@@ -21,7 +23,10 @@ var Home = React.createClass({
                         <h5 className="header col s12 light">Who solves it the fastest? Try your luck!</h5>
                     </div>
                     <div className="row center">
-                        <a Link to="/typing" id="download-button" className="btn-large waves-effect waves-light orange">START GAME</a>
+                        {(this.props.auth
+                                ?    <Link to="/C1" onClick={this.props.game} id="download-button" className="btn-large waves-effect waves-light orange">Start</Link>
+                                :    <div></div>
+                        )}
                     </div>
                 </div>
             </div>
@@ -31,15 +36,15 @@ var Home = React.createClass({
 });
 
 var mapStateToProps = function(state){
-    return state.login;
+    return state.login
 };
 
 var mapDispatchToProps = function(dispatch){
     return {
-        login: function(){
-            dispatch(actions.login());
+        game: function(){
+            console.log('sdfsfs');
+            dispatch(actions.gameOngoing());
         },
-
     }
 };
 

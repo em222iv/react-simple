@@ -24,7 +24,7 @@ module.exports = {
 
     logout(cb) {
         delete localStorage.token
-        if (cb) cb()
+        if (cb) cb();
         this.onChange(false)
     },
 
@@ -33,7 +33,7 @@ module.exports = {
     },
 
     onChange() {}
-}
+};
 function pretendRequest(username, pass, cb) {
     setTimeout(() => {
         if (username === 'erik' && pass === 'pass') {
@@ -45,4 +45,4 @@ function pretendRequest(username, pass, cb) {
             cb({ authenticated: false })
         }
     }, 0)
-}
+};

@@ -10,7 +10,18 @@ module.exports = {
         auth.logout();
         return {type: 'LOGOUT'};
     },
+    token: function () {
+        return {type: 'LOGIN'};
+    },
+    countIncrease: function(){
+        return {type: 'COUNT_INC'};
+    },
+    countDecrease: function(){
+        return {type: 'COUNT_DEC'};
+    },
+    gameOngoing: function(){
+        return {type: 'GAME_ON'};
+    }
 };
 
 
-implem

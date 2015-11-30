@@ -1,6 +1,6 @@
 var initialState = require('./../initial-state');
 
-var LoginReducer = function(state, action){
+var NavReducer = function(state, action){
     var newState = Object.assign({}, state);
     switch(action.type){
         case 'LOGIN':
@@ -14,4 +14,4 @@ var LoginReducer = function(state, action){
     }
 };
 
-module.exports = LoginReducer;
+module.exports = NavReducer;

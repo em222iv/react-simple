@@ -1,0 +1,5 @@
+
+
+function closeModal() {
+    $('#modal').closeModal();
+}

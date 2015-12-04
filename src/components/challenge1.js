@@ -3,34 +3,44 @@ var React = require('react'),
     ReactRedux = require('react-redux'),
     actions = require('../actions'),
     auth = require('../auth'),
-    Navigation = require('react-router').Navigation;
+    Navigation = require('react-router').Navigation,
+    Link = require('react-router').Link,
+    Modal = require('./modal');
 
-this.counter = 0;
+var counter = 0;
+var loader;
 var Challenge1 = React.createClass({
     mixins: [Navigation],
     propTypes: {
         increase: ptypes.func.isRequired
     },
-    componentWillMount: function() {
-        if(!auth.loggedIn() || !this.props.game.ongoing){
+    componentWillMount: function () {
+        if (!auth.loggedIn() || !this.props.game.ongoing) {
             this.props.history.pushState(null, '/');
         }
     },
-    componentDidMount: function() {
-        var counter = 0;
-        var loader = $( "#loader" );
-        function incLoader() {
-            if (loader[0].style.width == "100%"){
-
-                return;
-            }
-            counter +=1;
-            loader.css( "width", counter+'%');
-            setTimeout(incLoader, 250)
-        }
-        setTimeout(incLoader, 100);
+    componentDidMount: function () {
+        counter = 0;
+        loader = $("#loader");
+        setTimeout(this.inc, 100);
     },
-
+    inc: function () {
+        var cont = true;
+        if (loader[0].style.width == "10%" && cont == true) {
+            cont = false;
+        }
+        if (cont == false) {
+            openModal();
+            setTimeout(this.challenge2, 3000)
+            return;
+        }
+        counter += 1;
+        loader.css("width", counter + '%');
+        setTimeout(this.inc, 250)
+    },
+    challenge2: function() {
+        this.props.history.pushState(null, '/C2');
+    },
     render: function(){
         var divStyle = {
             width: '0%',
@@ -54,8 +64,10 @@ var Challenge1 = React.createClass({
                 <div className="row center">
                     <a onClick={this.props.increase} id="download-button" className="btn-large waves-effect waves-light orange">CLICK! CLICK FOR GODS SAKES!!!</a>
                 </div>
-                </div>
             </div>
+                <Modal />
+            </div>
+
         );
     }
 });
@@ -76,4 +88,9 @@ var mapDispatchToProps = function(dispatch){
     }
 };
 
+function openModal() {
+    $('#modal').openModal({
+        dismissible: false
+    });
+}
 module.exports = ReactRedux.connect(mapStateToProps, mapDispatchToProps)(Challenge1);

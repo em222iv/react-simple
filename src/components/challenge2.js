@@ -8,7 +8,6 @@ var React = require('react'),
     Timer = require('./timer');
 
 var Challenge2 = React.createClass({
-    word: "",
     mixins: [Navigation],
     propTypes: {
         decrease: ptypes.func.isRequired,
@@ -23,7 +22,6 @@ var Challenge2 = React.createClass({
     componentDidMount: function() {
         this.props.getWord();
     },
-
     handleChange: function(event) {
         this.props.decrease();
         var a = this.props.worda.randomWord;

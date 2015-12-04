@@ -4,8 +4,8 @@ var React = require('react'),
     actions = require('../actions'),
     auth = require('../auth'),
     Navigation = require('react-router').Navigation,
-    Link = require('react-router').Link,
-    Modal = require('./modal');
+    Modal = require('./modal'),
+    Points = require('./points');
 
 var counter = 0;
 var loader;
@@ -18,6 +18,7 @@ var Challenge1 = React.createClass({
         if (!auth.loggedIn() || !this.props.game.ongoing) {
             this.props.history.pushState(null, '/');
         }
+        this.props.points.currentValue = 0;
     },
     componentDidMount: function () {
         counter = 0;
@@ -26,7 +27,7 @@ var Challenge1 = React.createClass({
     },
     inc: function () {
         var cont = true;
-        if (loader[0].style.width == "10%" && cont == true) {
+        if (loader[0].style.width == "50%" && cont == true) {
             cont = false;
         }
         if (cont == false) {
@@ -59,7 +60,7 @@ var Challenge1 = React.createClass({
                     <div className="progress">
                         <div id="loader" className="determinate" style={divStyle}></div>
                     </div>
-                    <h6>Clicks: {this.props.count.currentValue}</h6>
+                   <Points />
                 </div>
                 <div className="row center">
                     <a onClick={this.props.increase} id="download-button" className="btn-large waves-effect waves-light orange">CLICK! CLICK FOR GODS SAKES!!!</a>
@@ -74,7 +75,7 @@ var Challenge1 = React.createClass({
 
 var mapStateToProps = function(state){
     return {
-        count: state.count,
+        points: state.points,
         game: state.game,
         auth: state.login.auth
     };
@@ -83,7 +84,7 @@ var mapStateToProps = function(state){
 var mapDispatchToProps = function(dispatch){
     return {
         increase: function(){
-            dispatch(actions.countIncrease());
+            dispatch(actions.pointsIncrease());
         }
     }
 };

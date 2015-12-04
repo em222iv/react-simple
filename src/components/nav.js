@@ -53,7 +53,7 @@ var mapDispatchToProps = function(dispatch){
         },
         logout: function(){
             dispatch(actions.logout());
-        },
+        }
     }
 };
 

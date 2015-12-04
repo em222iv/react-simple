@@ -1,5 +1,0 @@
-
-
-function closeModal() {
-    $('#modal').closeModal();
-}

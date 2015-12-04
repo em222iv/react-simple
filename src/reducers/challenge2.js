@@ -3,15 +3,12 @@ var initialState = require('./../initial-state');
 var Challenge2Reducer = function(state, action){
     var newState = Object.assign({}, state);
     switch(action.type){
-        case 'COUNT_INC':
-            newState.currentValue += 1;
-            console.log(newState.currentValue);
-            return newState;
-        case 'COUNT_DEC':
-            newState.currentValue -= 1;
+        case 'RND_SENTENCE':
+            console.log('rnd_s');
+            newState.randomWord = action.wordieWord;
             return newState;
         default:
-            return state || initialState().count;
+            return state || initialState().word;
     }
 };
 

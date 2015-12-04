@@ -35,6 +35,7 @@
     "react-facebook-login": "^2.0.1",
     "react-materialize": "^0.1.0",
     "react-progressbar.js": "^0.1.2",
+    "react-timer-mixin": "^0.13.3",
     "redux-thunk": "^1.0.0"
   }
 }

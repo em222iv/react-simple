@@ -1,6 +1,6 @@
 var initialState = require('./../initial-state');
 
-var Challenge1Reducer = function(state, action){
+var Challenge2Reducer = function(state, action){
     var newState = Object.assign({}, state);
     switch(action.type){
         case 'POINTS_INC':
@@ -15,4 +15,4 @@ var Challenge1Reducer = function(state, action){
     }
 };
 
-module.exports = Challenge1Reducer;
+module.exports = Challenge2Reducer;

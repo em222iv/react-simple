@@ -6,9 +6,7 @@ var React = require('react'),
     Link = require('react-router').Link;
 
 
-this.divStyle = {
-    width:200
-};
+
 var Login = React.createClass({
     propTypes: {
         login: ptypes.func.isRequired
@@ -54,6 +52,10 @@ var Login = React.createClass({
         );
     }
 });
+
+Login.divStyle = {
+    width:200
+};
 
 var mapStateToProps = function(state){
     return state.login;

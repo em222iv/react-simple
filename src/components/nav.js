@@ -6,9 +6,7 @@ var React = require('react'),
     auth = require('../auth');
 
 
-this.divStyle = {
-    left: -250
-};
+
 var Nav = React.createClass({
     propTypes: {
         login: ptypes.func.isRequired
@@ -48,6 +46,12 @@ var Nav = React.createClass({
         );
     }
 });
+
+
+Nav.divStyle = {
+    left: -250
+};
+
 var mapStateToProps = function(state){
     return state.login;
 };

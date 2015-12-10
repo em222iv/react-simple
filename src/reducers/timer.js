@@ -1,4 +1,5 @@
 var initialState = require('./../initial-state');
+var actions = require('./../actions');
 
 var TimerReducer = function(state, action){
     var newState = Object.assign({}, state);
@@ -14,6 +15,9 @@ var TimerReducer = function(state, action){
             return newState;
         case 'TIME_DEC10':
             newState.elapsed -= 10;
+            return newState;
+        case 'SET_TIME':
+            newState.elapsed = parseInt(action.timer);
             return newState;
         default:
             return state || initialState().timer;

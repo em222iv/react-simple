@@ -23,6 +23,12 @@ var Nav = React.createClass({
                 this.props.login(user);
             }
         });
+
+    },
+    componentDidMount: function() {
+        if (!auth.loggedIn()) {
+            this.props.history.pushState(null, '/');
+        }
     },
     render: function(){
         return (

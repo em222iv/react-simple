@@ -7,18 +7,31 @@ var React = require('react'),
 var Timer = React.createClass({
     mixins: [TimerMixin],
     propTypes: {
-        time: ptypes.func.isRequired
+        timeDec1: ptypes.func.isRequired,
+        timeInc1: ptypes.func.isRequired,
+        setTime: ptypes.func.isRequired,
+
     },
     componentDidMount: function() {
-        this.setInterval(
-            () => { this.props.time(); },
-            1000
-        );
+        this.props.setTime(this.props.startTime);
+        if(this.props.time == "inc1"){
+
+            this.setInterval(
+                () => { this.props.timeInc1(); },
+                1000
+            );
+        }
+        if (this.props.time == "dec1") {
+            this.setInterval(
+                () => { this.props.timeDec1(); },
+                1000
+            );
+        }
     },
     render: function(){
         return (
             <div className="row right center">
-                <p className="header col s12 light">{this.props.elapse}</p>
+                <h6>{this.props.elapse}</h6>
             </div>
         );
     }
@@ -32,8 +45,14 @@ var mapStateToProps = function(state){
 
 var mapDispatchToProps = function(dispatch){
     return {
-        time: function(){
+        timeInc1: function(){
             dispatch(actions.timeIncrease());
+        },
+        timeDec1: function(){
+            dispatch(actions.timeDecrease());
+        },
+        setTime: function(time){
+            dispatch(actions.setTimer(time));
         }
     }
 };

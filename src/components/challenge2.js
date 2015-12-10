@@ -5,6 +5,7 @@ var React = require('react'),
     auth = require('../auth'),
     Navigation = require('react-router').Navigation,
     Modal = require('./modal'),
+    Points = require('./points');
     Timer = require('./timer');
 
 var Challenge2 = React.createClass({
@@ -14,9 +15,6 @@ var Challenge2 = React.createClass({
         getWord: ptypes.func.isRequired
     },
     componentWillMount: function() {
-        if(!auth.loggedIn() || !this.props.game.ongoing){
-            this.props.history.pushState(null, '/');
-        }
         this.props.points.currentValue = 500;
     },
     componentDidMount: function() {
@@ -59,10 +57,10 @@ var Challenge2 = React.createClass({
                         <div className="progress">
                             <div id="loader" className="determinate" style={divStyle}></div>
                         </div>
-                        <div className="row left center">
-                            <p>Points: {this.props.points.currentValue}</p>
+                        <div className="col row s6 offset-s3 center">
+                            <Points />
+                            <Timer time="inc1" startTime="0"/>
                         </div>
-                        <Timer />
                     </div>
                     <div className="row">
                         <div className="col s12 m12">
@@ -84,6 +82,7 @@ var Challenge2 = React.createClass({
                         </div>
                     </div>
                 </div>
+
                 <Modal />
             </div>
 

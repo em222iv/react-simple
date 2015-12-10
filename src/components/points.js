@@ -11,7 +11,7 @@ var Points = React.createClass({
     },
     render: function(){
         return (
-            <div className="section no-pad-bot" id="index-banner">
+            <div className="row left center">
                 <h6>Clicks: {this.props.points.currentValue}</h6>
             </div>
 

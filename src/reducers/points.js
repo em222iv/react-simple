@@ -5,7 +5,6 @@ var Challenge2Reducer = function(state, action){
     switch(action.type){
         case 'POINTS_INC':
             newState.currentValue += 1;
-            console.log(newState.currentValue);
             return newState;
         case 'POINTS_DEC':
             newState.currentValue -= 1;

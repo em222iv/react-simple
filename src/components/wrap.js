@@ -1,7 +1,14 @@
 var React = require('react'),
-    Nav = require('./nav');
+    ReactRedux = require('react-redux'),
+    Nav = require('./nav'),
+    auth = require('../auth');
 
 var Wrap = React.createClass({
+    componentDidMount: function() {
+        if (!auth.loggedIn() || !this.props.game.ongoing) {
+            this.props.history.pushState(null, '/');
+        }
+    },
     render: function(){
         return (
             <div>
@@ -12,4 +19,18 @@ var Wrap = React.createClass({
     }
 });
 
-module.exports = Wrap;
+var mapStateToProps = function(state){
+    return {
+        game: state.game,
+        auth: state.login.auth,
+    };
+};
+
+var mapDispatchToProps = function(){
+    return {
+
+    }
+};
+
+
+module.exports = ReactRedux.connect(mapStateToProps, mapDispatchToProps)(Wrap);

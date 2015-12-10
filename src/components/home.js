@@ -42,7 +42,6 @@ var mapStateToProps = function(state){
 var mapDispatchToProps = function(dispatch){
     return {
         game: function(){
-            console.log('sdfsfs');
             dispatch(actions.gameOngoing());
         },
     }

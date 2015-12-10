@@ -5,13 +5,14 @@ var React = require('react'),
     auth = require('../auth'),
     Navigation = require('react-router').Navigation,
     Modal = require('./modal'),
+    Timer = require('./timer'),
     Points = require('./points');
 
-var counter = 0;
-var loader;
+
 var Challenge1 = React.createClass({
     mixins: [Navigation],
     propTypes: {
+        decrease: ptypes.func.isRequired,
         increase: ptypes.func.isRequired
     },
     componentWillMount: function () {
@@ -20,32 +21,7 @@ var Challenge1 = React.createClass({
         }
         this.props.points.currentValue = 0;
     },
-    componentDidMount: function () {
-        counter = 0;
-        loader = $("#loader");
-        setTimeout(this.inc, 100);
-    },
-    inc: function () {
-        var cont = true;
-        if (loader[0].style.width == "50%" && cont == true) {
-            cont = false;
-        }
-        if (cont == false) {
-            openModal();
-            setTimeout(this.challenge2, 3000)
-            return;
-        }
-        counter += 1;
-        loader.css("width", counter + '%');
-        setTimeout(this.inc, 250)
-    },
-    challenge2: function() {
-        this.props.history.pushState(null, '/C2');
-    },
     render: function(){
-        var divStyle = {
-            width: '0%',
-        };
         return (
             <div className="section no-pad-bot" id="index-banner">
             <div className="container">
@@ -57,10 +33,10 @@ var Challenge1 = React.createClass({
                 </div>
                 <div className="row center">
                     <h5 className="header col s12 light">Click the button as many times as possible!!!</h5>
-                    <div className="progress">
-                        <div id="loader" className="determinate" style={divStyle}></div>
+                    <div className="col row s6 offset-s3 center">
+                        <Points />
+                        <Timer time="dec1" startTime="50"/>
                     </div>
-                   <Points />
                 </div>
                 <div className="row center">
                     <a onClick={this.props.increase} id="download-button" className="btn-large waves-effect waves-light orange">CLICK! CLICK FOR GODS SAKES!!!</a>
@@ -77,7 +53,8 @@ var mapStateToProps = function(state){
     return {
         points: state.points,
         game: state.game,
-        auth: state.login.auth
+        auth: state.login.auth,
+        elapse: state.timer.elapsed
     };
 };
 
@@ -85,13 +62,16 @@ var mapDispatchToProps = function(dispatch){
     return {
         increase: function(){
             dispatch(actions.pointsIncrease());
+        },
+        decrease: function(){
+            dispatch(actions.timeDecrease());
         }
     }
 };
 
-function openModal() {
-    $('#modal').openModal({
-        dismissible: false
-    });
-}
+//function openModal() {
+//    $('#modal').openModal({
+//        dismissible: false
+//    });
+//}
 module.exports = ReactRedux.connect(mapStateToProps, mapDispatchToProps)(Challenge1);

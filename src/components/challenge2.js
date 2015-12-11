@@ -5,7 +5,7 @@ var React = require('react'),
     auth = require('../auth'),
     Navigation = require('react-router').Navigation,
     Modal = require('./modal'),
-    Points = require('./points');
+    Points = require('./points'),
     Timer = require('./timer');
 
 var Challenge2 = React.createClass({

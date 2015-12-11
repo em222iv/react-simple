@@ -8,7 +8,6 @@ var React = require('react'),
     Timer = require('./timer'),
     Points = require('./points');
 
-
 var Challenge1 = React.createClass({
     mixins: [Navigation],
     propTypes: {

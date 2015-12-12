@@ -25,7 +25,8 @@ var Nav = React.createClass({
     },
     componentDidMount: function() {
         if (!auth.loggedIn()) {
-            this.props.history.pushState(null, '/');
+            // The line bolow here do nothing except cause error in webpack. So out commended it.
+            //this.props.history.pushState(null, '/');
         }
     },
     render: function(){

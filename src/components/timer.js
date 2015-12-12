@@ -16,19 +16,30 @@ var Timer = React.createClass({
     },
     componentDidMount: function() {
         this.props.setTime(this.props.startTime);
-        this.setInterval(
         switch (this.props.time) {
             case "inc1":
-                this.elapser(this.props.timeInc1())
+                this.setInterval(
+                    () => { this.props.timeInc1() },
+                    1000
+                );
                 break;
             case "dec1":
-                this.elapser(this.props.timeInc10())
+                this.setInterval(
+                    () => { this.props.timeInc10() },
+                    1000
+                );
                 break;
             case "inc10":
-                this.elapser(this.props.timeDec1())
+                this.setInterval(
+                    () => { this.props.timeDec1() },
+                    1000
+                );
                 break;
             case "dec10":
-               this.elapser(this.props.timeDec10())
+                this.setInterval(
+                    () => { this.props.timeDec10() },
+                    1000
+                );
                 break;
         }
     },

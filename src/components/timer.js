@@ -9,29 +9,41 @@ var Timer = React.createClass({
     propTypes: {
         timeDec1: ptypes.func.isRequired,
         timeInc1: ptypes.func.isRequired,
+        timeDec10: ptypes.func.isRequired,
+        timeInc10: ptypes.func.isRequired,
         setTime: ptypes.func.isRequired,
 
     },
     componentDidMount: function() {
         this.props.setTime(this.props.startTime);
-        if(this.props.time == "inc1"){
-
-            this.setInterval(
-                () => { this.props.timeInc1(); },
-                1000
-            );
+        this.setInterval(
+        switch (this.props.time) {
+            case "inc1":
+                this.elapser(this.props.timeInc1())
+                break;
+            case "dec1":
+                this.elapser(this.props.timeInc10())
+                break;
+            case "inc10":
+                this.elapser(this.props.timeDec1())
+                break;
+            case "dec10":
+               this.elapser(this.props.timeDec10())
+                break;
         }
-        if (this.props.time == "dec1") {
-            this.setInterval(
-                () => { this.props.timeDec1(); },
-                1000
-            );
-        }
+        //FIX THE TIME INTERVAL
+    },
+    "elapser": function(elapser) {
+        console.
+        this.setInterval(
+            () => { elapser },
+            1000
+        );
     },
     render: function(){
         return (
             <div className="row right center">
-                <h6>{this.props.elapse}</h6>
+                <h6>Secs: {this.props.elapse}</h6>
             </div>
         );
     }
@@ -46,10 +58,16 @@ var mapStateToProps = function(state){
 var mapDispatchToProps = function(dispatch){
     return {
         timeInc1: function(){
-            dispatch(actions.timeIncrease());
+            dispatch(actions.timeInc1());
         },
         timeDec1: function(){
-            dispatch(actions.timeDecrease());
+            dispatch(actions.timeDec1());
+        },
+        timeInc10: function(){
+            dispatch(actions.timeInc10());
+        },
+        timeDec10: function(){
+            dispatch(actions.timeDec10());
         },
         setTime: function(time){
             dispatch(actions.setTimer(time));

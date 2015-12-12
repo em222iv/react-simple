@@ -3,5 +3,17 @@ module.exports = function(){
         login: {
             auth: false
         },
+        points: {
+            currentValue: 0
+        },
+        game: {
+            ongoing: false
+        },
+        timer: {
+            elapsed: 0
+        },
+        word: {
+            randomWord: ""
+        }
     }
 };

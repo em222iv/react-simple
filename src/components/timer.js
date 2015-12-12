@@ -31,7 +31,6 @@ var Timer = React.createClass({
                this.elapser(this.props.timeDec10())
                 break;
         }
-        //FIX THE TIME INTERVAL
     },
     "elapser": function(elapser) {
         console.

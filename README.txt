@@ -3,6 +3,10 @@ Simple React Redux Application
 
 <p> this will be a application that presents challenges to the user</p>
 
+Current login credentials:
+user: test
+password: pass
+
 <p> Below is a list of upcomming functionality that you are more than wellcome to help me add </p>
 
 <h4>functionality</h4>

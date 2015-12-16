@@ -5,7 +5,6 @@ var HomeReducer = function(state, action){
     switch(action.type){
         case 'GAME_ON':
             newState.ongoing = true;
-            console.log(newState);
             return newState;
         default:
             return state || initialState().game;

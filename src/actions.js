@@ -35,7 +35,6 @@ module.exports = {
         return {type: 'TIME_DEC10'};
     },
     setTimer: function(time){
-        console.log("action"+time);
         return {
             type: 'SET_TIME',
             timer: time

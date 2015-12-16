@@ -1,8 +1,6 @@
 import React, {PropTypes, Component} from 'react';
 import {connect} from'react-redux';
 import actions from '../actions';
-import auth from '../auth';
-import {Navigation} from 'react-router';
 import Modal from './modal';
 import Points from './points';
 import Timer from './timer';

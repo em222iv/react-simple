@@ -30,7 +30,6 @@ var config = {
         root: __dirname
     },
     devtool: "source-map"
-
 };
 
 module.exports = config;

@@ -23,13 +23,13 @@ var Timer = React.createClass({
                     1000
                 );
                 break;
-            case "dec1":
+            case "inc10":
                 this.setInterval(
                     () => { this.props.timeInc10() },
                     1000
                 );
                 break;
-            case "inc10":
+            case "dec1":
                 this.setInterval(
                     () => { this.props.timeDec1() },
                     1000

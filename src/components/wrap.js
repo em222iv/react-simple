@@ -1,27 +1,18 @@
-//var React = require('react'),
-//    ReactRedux = require('react-redux'),
-//    Nav = require('./nav'),
-//    auth = require('../auth');
-//import React from 'react';
-//import ReactRedux from 'react-redux';
-//import Nav from './Nav';
-//import auth from '../auth';
 import React, {PropTypes, Component} from 'react';
 import auth from '../auth';
-import Nav from './Nav';
+import Nav from './nav';
 import {connect} from'react-redux';
 import {Navigation} from 'react-router';
 import reactMixin from 'react-mixin';
 
-
-
-var Wrap = React.createClass({
-    componentDidMount: function() {
+class Wrap extends React.Component {
+    componentDidMount() {
         if (!auth.loggedIn() || !this.props.game.ongoing) {
             this.props.history.pushState(null, '/');
         }
-    },
-    render: function(){
+    }
+
+    render() {
         return (
             <div>
                 <Nav/>
@@ -29,20 +20,15 @@ var Wrap = React.createClass({
             </div>
         );
     }
-});
-reactMixin.onClass(Wrap, Navigation);
-var mapStateToProps = function(state){
+}
+
+const mapStateToProps = (state) => {
     return {
         game: state.game,
         auth: state.login.auth,
     };
 };
 
-var mapDispatchToProps = function(){
-    return {
+reactMixin.onClass(Wrap, Navigation);
 
-    }
-};
-
-
-export default connect(mapStateToProps, mapDispatchToProps)(Wrap);
+export default connect(mapStateToProps)(Wrap);

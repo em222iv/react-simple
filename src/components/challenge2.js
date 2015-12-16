@@ -1,48 +1,43 @@
-var React = require('react'),
-    ptypes = React.PropTypes,
-    ReactRedux = require('react-redux'),
-    actions = require('../actions'),
-    auth = require('../auth'),
-    Navigation = require('react-router').Navigation,
-    Modal = require('./modal'),
-    Points = require('./points'),
-    Timer = require('./timer');
+import React, {PropTypes, Component} from 'react';
+import {connect} from'react-redux';
+import actions from '../actions';
+import auth from '../auth';
+import {Navigation} from 'react-router';
+import Modal from './modal';
+import Points from './points';
+import Timer from './timer';
 
-var Challenge2 = React.createClass({
-    mixins: [Navigation],
-    propTypes: {
-        decrease: ptypes.func.isRequired,
-        getWord: ptypes.func.isRequired
-    },
-    componentWillMount: function() {
+class Challenge2 extends Component{
+
+    componentWillMount () {
         this.props.points.currentValue = 500;
-    },
-    componentDidMount: function() {
+    }
+    componentDidMount () {
         this.props.getWord();
-    },
-    handleChange: function(event) {
+    }
+    handleChange(event) {
         this.props.decrease();
-        var a = this.props.worda.randomWord;
-        var b = event.target.value;
+        const a = this.props.worda.randomWord;
+        const b = event.target.value;
         if(a == b){
             openModal();
         }
-        var equivalency = 0;
-        var minLength = (a.length > b.length) ? b.length : a.length;
-        var maxLength = (a.length < b.length) ? b.length : a.length;
-        for(var i = 0; i < minLength; i++) {
+        let equivalency = 0;
+        const minLength = (a.length > b.length) ? b.length : a.length;
+        const maxLength = (a.length < b.length) ? b.length : a.length;
+        for(let i = 0; i < minLength; i++) {
             if(a[i] == b[i]) {
                 equivalency++;
             }
         }
 
-        var weight = equivalency / maxLength;
-        var loader = $("#loader");
+        const weight = equivalency / maxLength;
+        let loader = $("#loader");
         loader.css("width", (weight * 100) + "%");
-    },
-    render: function(){
-        var divStyle = {
-            width: '0%',
+    }
+    render (){
+        const divStyle = {
+            width: '0%'
         };
         return (
             <div className="section no-pad-bot" id="index-banner">
@@ -69,7 +64,7 @@ var Challenge2 = React.createClass({
                                     <form className="col s12">
                                         <div className="row">
                                             <div className="input-field col s12">
-                                                <textarea onChange={this.handleChange} id="textarea1" className="materialize-textarea"></textarea>
+                                                <textarea onChange={this.handleChange.bind(this)} id="textarea1" className="materialize-textarea"></textarea>
                                                 <label htmlFor="textarea1">Type here!</label>
                                             </div>
                                         </div>
@@ -88,14 +83,19 @@ var Challenge2 = React.createClass({
 
         );
     }
-});
-function openModal() {
+}
+const openModal = () => {
     $('#modal').openModal({
         dismissible: false
     });
-}
+};
 
-var mapStateToProps = function(state){
+Challenge2.propTypes = {
+    decrease: PropTypes.func.isRequired,
+    getWord: PropTypes.func.isRequired
+};
+
+const mapStateToProps = state => {
     return {
         points: state.points,
         game: state.game,
@@ -104,15 +104,15 @@ var mapStateToProps = function(state){
     };
 };
 
-var mapDispatchToProps = function(dispatch){
+const mapDispatchToProps = (dispatch) =>{
     return {
-        decrease: function(){
+        decrease (){
             dispatch(actions.pointsDecrease());
         },
-        getWord: function(){
+        getWord (){
             dispatch(actions.getRndString());
         }
     }
 };
 
-module.exports = ReactRedux.connect(mapStateToProps, mapDispatchToProps)(Challenge2);
+module.exports = connect(mapStateToProps, mapDispatchToProps)(Challenge2);

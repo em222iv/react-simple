@@ -28,7 +28,8 @@ var config = {
     resolve: {
         extensions: ['', '.js'],
         root: __dirname
-    }
+    },
+    devtool: "source-map"
 
 };
 

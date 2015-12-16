@@ -2,7 +2,6 @@ var React = require('react'),
     ptypes = React.PropTypes,
     ReactRedux = require('react-redux'),
     actions = require('../actions'),
-    auth = require('../auth'),
     Link = require('react-router').Link;
 
 

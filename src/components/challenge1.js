@@ -1,26 +1,23 @@
-var React = require('react'),
-    ptypes = React.PropTypes,
-    ReactRedux = require('react-redux'),
-    actions = require('../actions'),
-    auth = require('../auth'),
-    Navigation = require('react-router').Navigation,
-    Modal = require('./modal'),
-    Timer = require('./timer'),
-    Points = require('./points');
+import React, {PropTypes, Component} from 'react';
+import {connect} from'react-redux';
+import actions from '../actions';
+import auth from '../auth';
+import {Navigation} from 'react-router';
+import Modal from './modal';
+import Points from './points';
+import Timer from './timer';
+import reactMixin from 'react-mixin';
 
-var Challenge1 = React.createClass({
-    mixins: [Navigation],
-    propTypes: {
-        decrease: ptypes.func.isRequired,
-        increase: ptypes.func.isRequired
-    },
-    componentWillMount: function () {
+class Challenge1 extends Component{
+
+    componentWillMount () {
         if (!auth.loggedIn() || !this.props.game.ongoing) {
             this.props.history.pushState(null, '/');
         }
         this.props.points.currentValue = 0;
-    },
-    render: function(){
+    }
+
+    render (){
         return (
             <div className="section no-pad-bot" id="index-banner">
             <div className="container">
@@ -46,9 +43,15 @@ var Challenge1 = React.createClass({
 
         );
     }
-});
+};
 
-var mapStateToProps = function(state){
+Challenge1.propTypes = {
+    decrease: PropTypes.func.isRequired,
+    increase: PropTypes.func.isRequired
+};
+reactMixin.onClass(Challenge1, Navigation);
+
+const mapStateToProps = state => {
     return {
         points: state.points,
         game: state.game,
@@ -57,7 +60,7 @@ var mapStateToProps = function(state){
     };
 };
 
-var mapDispatchToProps = function(dispatch){
+const mapDispatchToProps = (dispatch) =>{
     return {
         increase: function(){
             dispatch(actions.pointsIncrease());
@@ -73,4 +76,4 @@ var mapDispatchToProps = function(dispatch){
 //        dismissible: false
 //    });
 //}
-module.exports = ReactRedux.connect(mapStateToProps, mapDispatchToProps)(Challenge1);
+export default connect(mapStateToProps, mapDispatchToProps)(Challenge1);

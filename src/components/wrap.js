@@ -1,7 +1,19 @@
-var React = require('react'),
-    ReactRedux = require('react-redux'),
-    Nav = require('./nav'),
-    auth = require('../auth');
+//var React = require('react'),
+//    ReactRedux = require('react-redux'),
+//    Nav = require('./nav'),
+//    auth = require('../auth');
+//import React from 'react';
+//import ReactRedux from 'react-redux';
+//import Nav from './Nav';
+//import auth from '../auth';
+import React, {PropTypes, Component} from 'react';
+import auth from '../auth';
+import Nav from './Nav';
+import {connect} from'react-redux';
+import {Navigation} from 'react-router';
+import reactMixin from 'react-mixin';
+
+
 
 var Wrap = React.createClass({
     componentDidMount: function() {
@@ -18,7 +30,7 @@ var Wrap = React.createClass({
         );
     }
 });
-
+reactMixin.onClass(Wrap, Navigation);
 var mapStateToProps = function(state){
     return {
         game: state.game,
@@ -33,4 +45,4 @@ var mapDispatchToProps = function(){
 };
 
 
-module.exports = ReactRedux.connect(mapStateToProps, mapDispatchToProps)(Wrap);
+export default connect(mapStateToProps, mapDispatchToProps)(Wrap);

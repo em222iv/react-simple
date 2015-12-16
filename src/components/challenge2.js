@@ -115,4 +115,4 @@ const mapDispatchToProps = (dispatch) =>{
     }
 };
 
-module.exports = connect(mapStateToProps, mapDispatchToProps)(Challenge2);
+export default connect(mapStateToProps, mapDispatchToProps)(Challenge2);

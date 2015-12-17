@@ -1,35 +1,32 @@
-var React = require('react'),
-    Login = require('./login'),
-    ReactRedux = require('react-redux'),
-    ptypes = React.PropTypes,
-    actions = require('../actions'),
-    auth = require('../auth');
+import { connect } from 'react-redux';
+import React, { PropTypes, Component } from 'react';
 
+import actions from '../actions';
+import auth from '../auth';
+import Login from './login';
 
-
-var Nav = React.createClass({
-    propTypes: {
-        login: ptypes.func.isRequired
-    },
-    componentWillMount: function() {
-        var user = {
-            username: "",
-            password: ""
+class Nav extends Component {
+    componentWillMount() {
+        const user = {
+            username: '',
+            password: ''
         };
-        auth.login("", "", (loggedIn) => {
-            if(loggedIn){
+
+        auth.login('', '', (loggedIn) => {
+            if (loggedIn) {
                 this.props.login(user);
             }
         });
+    }
 
-    },
-    componentDidMount: function() {
+    componentDidMount() {
         if (!auth.loggedIn()) {
             // The line bolow here do nothing except cause error in webpack. So out commended it.
             //this.props.history.pushState(null, '/');
         }
-    },
-    render: function(){
+    }
+
+    render() {
         return (
             <div>
                 <Login/>
@@ -46,26 +43,29 @@ var Nav = React.createClass({
             </div>
         );
     }
-});
-
+}
 
 Nav.divStyle = {
     left: -250
 };
 
-var mapStateToProps = function(state){
+Nav.propTypes = {
+    login: PropTypes.func.isRequired
+};
+
+const mapStateToProps = (state) => {
     return state.login;
 };
 
-var mapDispatchToProps = function(dispatch){
+const mapDispatchToProps = (dispatch) => {
     return {
-        login: function(loginCall){
+        login: (loginCall) => {
             actions.login(loginCall, dispatch);
         },
-        logout: function(){
+        logout: () => {
             dispatch(actions.logout());
         }
-    }
+    };
 };
 
-module.exports = ReactRedux.connect(mapStateToProps, mapDispatchToProps)(Nav);
+export default connect(mapStateToProps, mapDispatchToProps)(Nav);

@@ -1,22 +1,18 @@
-var React = require('react'),
-    ptypes = React.PropTypes,
-    ReactRedux = require('react-redux'),
-    Link = require('react-router').Link,
-    actions = require('../actions');
+import React, { Component, PropTypes } from 'react';
+import { connect } from 'react-redux';
+import { Link } from 'react-router';
 
-var Home = React.createClass({
-    propTypes: {
-        auth: ptypes.bool.isRequired,
-        game: ptypes.func.isRequired,
-    },
-    render: function(){
+import actions from '../actions';
+
+class Home extends Component {
+    render() {
         return (
             <div className="section no-pad-bot" id="index-banner">
                 <div className="container">
                     <div>
                         {(this.props.auth
-                                ?   <h1 className="header center orange-text">Hello!</h1>
-                                :   <h1 className="header center orange-text">Login!</h1>
+                              ? <h1 className="header center orange-text">Hello!</h1>
+                              : <h1 className="header center orange-text">Login!</h1>
                         )}
                     </div>
                     <div className="row center">
@@ -24,27 +20,31 @@ var Home = React.createClass({
                     </div>
                     <div className="row center">
                         {(this.props.auth
-                                ?    <Link to="/C1" onClick={this.props.game} id="download-button" className="btn-large waves-effect waves-light orange">Start</Link>
-                                :    <div></div>
+                              ? <Link to="/C1" onClick={this.props.game} id="download-button" className="btn-large waves-effect waves-light orange">Start</Link>
+                              : <div></div>
                         )}
                     </div>
                 </div>
             </div>
-
         );
     }
-});
+}
 
-var mapStateToProps = function(state){
-    return state.login
+Home.propTypes = {
+    auth: PropTypes.bool.isRequired,
+    game: PropTypes.func.isRequired
 };
 
-var mapDispatchToProps = function(dispatch){
+const mapStateToProps = (state) => {
+    return state.login;
+};
+
+const mapDispatchToProps = (dispatch) => {
     return {
-        game: function(){
+        game: () => {
             dispatch(actions.gameOngoing());
-        },
-    }
+        }
+    };
 };
 
-module.exports = ReactRedux.connect(mapStateToProps, mapDispatchToProps)(Home);
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

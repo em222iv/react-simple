@@ -1,9 +1,10 @@
-import React, {PropTypes, Component} from 'react';
+import { connect } from 'react-redux';
+import { Navigation } from 'react-router';
+import React, { PropTypes } from 'react';
+import ReactMixin from 'react-mixin';
+
 import auth from '../auth';
 import Nav from './nav';
-import {connect} from'react-redux';
-import {Navigation} from 'react-router';
-import reactMixin from 'react-mixin';
 
 class Wrap extends React.Component {
     componentDidMount() {
@@ -16,19 +17,25 @@ class Wrap extends React.Component {
         return (
             <div>
                 <Nav/>
-                {this.props.children}
+                    {this.props.children}
             </div>
         );
     }
 }
 
+Wrap.propTypes = {
+    game: PropTypes.object.isRequired,
+    history: PropTypes.object.isRequired,
+    children: PropTypes.object
+};
+
 const mapStateToProps = (state) => {
     return {
         game: state.game,
-        auth: state.login.auth,
+        auth: state.login.auth
     };
 };
 
-reactMixin.onClass(Wrap, Navigation);
+ReactMixin.onClass(Wrap, Navigation);
 
 export default connect(mapStateToProps)(Wrap);

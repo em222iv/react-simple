@@ -1,39 +1,50 @@
-import React, {PropTypes, Component} from 'react';
-import {connect} from'react-redux';
+import { connect } from 'react-redux';
+import React, { Component, PropTypes } from 'react';
+
 import actions from '../actions';
+import auth from '../auth';
 import Modal from './modal';
 import Points from './points';
 import Timer from './timer';
 
-class Challenge2 extends Component{
+const openModal = () => {
+    $('#modal').openModal({
+        dismissible: false
+    });
+};
 
-    componentWillMount () {
+class Challenge2 extends Component {
+
+    componentWillMount() {
         this.props.points.currentValue = 500;
     }
-    componentDidMount () {
+
+    componentDidMount() {
         this.props.getWord();
     }
+
     handleChange(event) {
         this.props.decrease();
         const a = this.props.worda.randomWord;
         const b = event.target.value;
-        if(a == b){
+        if (a === b) {
             openModal();
         }
         let equivalency = 0;
         const minLength = (a.length > b.length) ? b.length : a.length;
         const maxLength = (a.length < b.length) ? b.length : a.length;
-        for(let i = 0; i < minLength; i++) {
-            if(a[i] == b[i]) {
+        for (let i = 0; i < minLength; i++) {
+            if (a[i] === b[i]) {
                 equivalency++;
             }
         }
 
         const weight = equivalency / maxLength;
-        let loader = $("#loader");
+        const loader = $("#loader");
         loader.css("width", (weight * 100) + "%");
     }
-    render (){
+
+    render() {
         const divStyle = {
             width: '0%'
         };
@@ -42,8 +53,8 @@ class Challenge2 extends Component{
                 <div className="container">
                     <div>
                         {(auth.loggedIn() && this.props.game.ongoing
-                                ?   <h1 className="header center orange-text">TYPE TYPE TYPE</h1>
-                                :   <h1 className="header center orange-text">Login and start new Game!</h1>
+                              ?  <h1 className="header center orange-text">TYPE TYPE TYPE</h1>
+                              :  <h1 className="header center orange-text">Login and start new Game!</h1>
                         )}
                     </div>
                     <div className="row center">
@@ -78,22 +89,19 @@ class Challenge2 extends Component{
 
                 <Modal />
             </div>
-
         );
     }
 }
-const openModal = () => {
-    $('#modal').openModal({
-        dismissible: false
-    });
-};
 
 Challenge2.propTypes = {
+    game: PropTypes.object.isRequired,
+    worda: PropTypes.object.isRequired,
+    points: PropTypes.object.isRequired,
     decrease: PropTypes.func.isRequired,
     getWord: PropTypes.func.isRequired
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
     return {
         points: state.points,
         game: state.game,
@@ -102,15 +110,15 @@ const mapStateToProps = state => {
     };
 };
 
-const mapDispatchToProps = (dispatch) =>{
+const mapDispatchToProps = (dispatch) => {
     return {
-        decrease (){
+        decrease: () => {
             dispatch(actions.pointsDecrease());
         },
-        getWord (){
+        getWord: () => {
             dispatch(actions.getRndString());
         }
-    }
+    };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Challenge2);

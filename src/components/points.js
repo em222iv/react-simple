@@ -1,36 +1,39 @@
-var React = require('react'),
-    ptypes = React.PropTypes,
-    ReactRedux = require('react-redux'),
-    actions = require('../actions'),
-    Navigation = require('react-router').Navigation;
+import { connect } from'react-redux';
+import { Navigation } from 'react-router';
+import React, { PropTypes, Component } from 'react';
+import ReactMixin from 'react-mixin';
 
-var Points = React.createClass({
-    mixins: [Navigation],
-    propTypes: {
-        increase: ptypes.func.isRequired
-    },
-    render: function(){
+import actions from '../actions';
+
+class Points extends Component {
+    render() {
         return (
             <div className="row left center">
                 <h6>Points: {this.props.points.currentValue}</h6>
             </div>
-
         );
     }
-});
+}
 
-var mapStateToProps = function(state){
+const mapStateToProps = (state) => {
     return {
-        points: state.points,
+        points: state.points
     };
 };
 
-var mapDispatchToProps = function(dispatch){
+const mapDispatchToProps = (dispatch) => {
     return {
-        increase: function(){
+        increase: () => {
             dispatch(actions.pointsIncrease());
         }
-    }
+    };
 };
 
-module.exports = ReactRedux.connect(mapStateToProps, mapDispatchToProps)(Points);
+Points.propTypes = {
+    points: PropTypes.object.isRequired,
+    increase: PropTypes.func.isRequired
+};
+
+ReactMixin.onClass(Points, Navigation);
+
+export default connect(mapStateToProps, mapDispatchToProps)(Points);

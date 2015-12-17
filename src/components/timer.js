@@ -1,88 +1,81 @@
-var React = require('react'),
-    ptypes = React.PropTypes,
-    ReactRedux = require('react-redux'),
-    actions = require('../actions'),
-    TimerMixin = require('react-timer-mixin');
+import { connect } from 'react-redux';
+import React, { PropTypes, Component } from 'react';
+import ReactMixin from 'react-mixin';
+import TimerMixin from 'react-timer-mixin';
 
-var Timer = React.createClass({
-    mixins: [TimerMixin],
-    propTypes: {
-        timeDec1: ptypes.func.isRequired,
-        timeInc1: ptypes.func.isRequired,
-        timeDec10: ptypes.func.isRequired,
-        timeInc10: ptypes.func.isRequired,
-        setTime: ptypes.func.isRequired,
+import actions from '../actions';
 
-    },
-    componentDidMount: function() {
+class Timer extends Component {
+    componentDidMount() {
         this.props.setTime(this.props.startTime);
         switch (this.props.time) {
-            case "inc1":
-                this.setInterval(
-                    () => { this.props.timeInc1() },
-                    1000
-                );
+            case 'inc1':
+                this.setInterval(() => this.props.timeInc1(), 1000);
                 break;
-            case "inc10":
-                this.setInterval(
-                    () => { this.props.timeInc10() },
-                    1000
-                );
+            case 'inc10':
+                this.setInterval(() => this.props.timeInc10(), 1000);
                 break;
-            case "dec1":
-                this.setInterval(
-                    () => { this.props.timeDec1() },
-                    1000
-                );
+            case 'dec1':
+                this.setInterval(() => this.props.timeDec1(), 1000);
                 break;
-            case "dec10":
-                this.setInterval(
-                    () => { this.props.timeDec10() },
-                    1000
-                );
+            case 'dec10':
+                this.setInterval(() => this.props.timeDec10(), 1000);
                 break;
+            default:
+                throw new Error('Not a valid start time!');
         }
-    },
-    "elapser": function(elapser) {
-        console.
-        this.setInterval(
-            () => { elapser },
-            1000
-        );
-    },
-    render: function(){
+    }
+
+    elapser(elapser) {
+        this.setInterval(() => elapser, 1000);
+    }
+
+    render() {
         return (
             <div className="row right center">
                 <h6>Secs: {this.props.elapse}</h6>
             </div>
         );
     }
-});
+}
 
-var mapStateToProps = function(state){
+Timer.propTypes = {
+    startTime: PropTypes.string.isRequired,
+    time: PropTypes.string.isRequired,
+    elapse: PropTypes.number.isRequired,
+    setTime: PropTypes.func.isRequired,
+    timeDec1: PropTypes.func.isRequired,
+    timeInc1: PropTypes.func.isRequired,
+    timeDec10: PropTypes.func.isRequired,
+    timeInc10: PropTypes.func.isRequired
+};
+
+ReactMixin.onClass(Timer, TimerMixin);
+
+const mapStateToProps = (state) => {
     return {
         elapse: state.timer.elapsed
-    }
+    };
 };
 
-var mapDispatchToProps = function(dispatch){
+const mapDispatchToProps = (dispatch) => {
     return {
-        timeInc1: function(){
+        timeInc1: () => {
             dispatch(actions.timeInc1());
         },
-        timeDec1: function(){
+        timeDec1: () => {
             dispatch(actions.timeDec1());
         },
-        timeInc10: function(){
+        timeInc10: () => {
             dispatch(actions.timeInc10());
         },
-        timeDec10: function(){
+        timeDec10: () => {
             dispatch(actions.timeDec10());
         },
-        setTime: function(time){
+        setTime: (time) => {
             dispatch(actions.setTimer(time));
         }
-    }
+    };
 };
 
-module.exports = ReactRedux.connect(mapStateToProps, mapDispatchToProps)(Timer);
+export default connect(mapStateToProps, mapDispatchToProps)(Timer);

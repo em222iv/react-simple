@@ -1,18 +1,18 @@
-import React, {PropTypes, Component} from 'react';
-import {connect} from'react-redux';
+import { connect } from 'react-redux';
+import React, { PropTypes, Component } from 'react';
+
 import actions from '../actions';
 import Modal from './modal';
 import Points from './points';
 import Timer from './timer';
-import reactMixin from 'react-mixin';
 
-class Challenge1 extends Component{
+class Challenge1 extends Component {
 
-    componentWillMount () {
+    componentWillMount() {
         this.props.points.currentValue = 0;
     }
 
-    render (){
+    render() {
         return (
             <div className="section no-pad-bot" id="index-banner">
             <div className="container">
@@ -32,12 +32,12 @@ class Challenge1 extends Component{
             </div>
                 <Modal />
             </div>
-
         );
     }
-};
+}
 
 Challenge1.propTypes = {
+    points: PropTypes.object.isRequired,
     decrease: PropTypes.func.isRequired,
     increase: PropTypes.func.isRequired
 };
@@ -51,15 +51,15 @@ const mapStateToProps = state => {
     };
 };
 
-const mapDispatchToProps = (dispatch) =>{
+const mapDispatchToProps = (dispatch) => {
     return {
-        increase: function(){
+        increase: () => {
             dispatch(actions.pointsIncrease());
         },
-        decrease: function(){
+        decrease: () => {
             dispatch(actions.timeDecrease());
-}
-}
+        }
+    };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Challenge1);

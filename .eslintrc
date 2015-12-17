@@ -1,0 +1,9 @@
+{
+  "extends": "airbnb",
+  "rules": {
+    // Trailing comma.
+    "comma-dangle": 0,
+    // Remove this if indent should be two spaces instead.
+    "indent": [2, 4, { "SwitchCase": 1, "VariableDeclarator": 1 }],
+  }
+}

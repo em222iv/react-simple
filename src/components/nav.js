@@ -22,7 +22,7 @@ class Nav extends Component {
     componentDidMount() {
         if (!auth.loggedIn()) {
             // The line bolow here do nothing except cause error in webpack. So out commended it.
-            //this.props.history.pushState(null, '/');
+            // this.props.history.pushState(null, '/');
         }
     }
 

@@ -40,8 +40,8 @@ class Challenge2 extends Component {
         }
 
         const weight = equivalency / maxLength;
-        const loader = $("#loader");
-        loader.css("width", (weight * 100) + "%");
+        const loader = $('#loader');
+        loader.css('width', (weight * 100) + '%');
     }
 
     render() {
@@ -53,8 +53,8 @@ class Challenge2 extends Component {
                 <div className="container">
                     <div>
                         {(auth.loggedIn() && this.props.game.ongoing
-                              ?  <h1 className="header center orange-text">TYPE TYPE TYPE</h1>
-                              :  <h1 className="header center orange-text">Login and start new Game!</h1>
+                              ? <h1 className="header center orange-text">TYPE TYPE TYPE</h1>
+                              : <h1 className="header center orange-text">Login and start new Game!</h1>
                         )}
                     </div>
                     <div className="row center">

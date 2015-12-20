@@ -42,7 +42,7 @@ Challenge1.propTypes = {
     increase: PropTypes.func.isRequired
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
     return {
         points: state.points,
         game: state.game,

@@ -1,7 +1,8 @@
-var initialState = require('./../initial-state');
+import initialState from'./../initial-state';
 
-var HomeReducer = function(state, action){
-    var newState = Object.assign({}, state);
+const HomeReducer = function(state, action){
+    const newState = Object.assign({}, state);
+
     switch(action.type){
         case 'GAME_ON':
             newState.ongoing = true;
@@ -11,4 +12,4 @@ var HomeReducer = function(state, action){
     }
 };
 
-module.exports = HomeReducer;
+export default HomeReducer;

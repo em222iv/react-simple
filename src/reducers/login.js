@@ -1,7 +1,8 @@
-var initialState = require('./../initial-state');
+import  initialState from './../initial-state';
 
-var LoginReducer = function(state, action){
-    var newState = Object.assign({}, state);
+const LoginReducer = function(state, action){
+    const newState = Object.assign({}, state);
+
     switch(action.type){
         case 'LOGIN':
             newState.auth = true;
@@ -14,4 +15,4 @@ var LoginReducer = function(state, action){
     }
 };
 
-module.exports = LoginReducer;
+export default LoginReducer;

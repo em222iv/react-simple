@@ -1,8 +1,6 @@
 import { connect } from 'react-redux';
 import React, { Component, PropTypes } from 'react';
-
 import actions from '../actions';
-import auth from '../auth';
 import Modal from './modal';
 import Points from './points';
 import Timer from './timer';
@@ -52,12 +50,10 @@ class Challenge2 extends Component {
             <div className="section no-pad-bot" id="index-banner">
                 <div className="container">
                     <div>
-                        {(auth.loggedIn() && this.props.game.ongoing
-                              ? <h1 className="header center orange-text">TYPE TYPE TYPE</h1>
-                              : <h1 className="header center orange-text">Login and start new Game!</h1>
-                        )}
+                       <h1 className="header center orange-text">TYPE TYPE TYPE</h1>
                     </div>
                     <div className="row center">
+                        <h5 className="header col s12 light">Write a perfect copy of the text in the bottom of the box!</h5>
                         <div className="progress">
                             <div id="loader" className="determinate" style={divStyle}></div>
                         </div>

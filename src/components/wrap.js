@@ -2,7 +2,6 @@ import { connect } from 'react-redux';
 import { Navigation } from 'react-router';
 import React, { PropTypes } from 'react';
 import ReactMixin from 'react-mixin';
-
 import auth from '../auth';
 import Nav from './nav';
 

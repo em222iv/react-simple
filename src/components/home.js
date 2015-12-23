@@ -20,7 +20,7 @@ class Home extends Component {
                     </div>
                     <div className="row center">
                         {(this.props.auth
-                              ? <Link to="/C1" onClick={this.props.game} id="download-button" className="btn-large waves-effect waves-light orange">Start</Link>
+                              ? <Link to="/C2" onClick={this.props.game} id="download-button" className="btn-large waves-effect waves-light orange">Start</Link>
                               : <div></div>
                         )}
                     </div>

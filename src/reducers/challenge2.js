@@ -1,7 +1,7 @@
-var initialState = require('./../initial-state');
+import initialState from './../initial-state';
 
-var Challenge2Reducer = function(state, action){
-    var newState = Object.assign({}, state);
+const Challenge2Reducer = function(state, action){
+    const newState = Object.assign({}, state);
     switch(action.type){
         case 'RND_SENTENCE':
             console.log('rnd_s');
@@ -12,4 +12,4 @@ var Challenge2Reducer = function(state, action){
     }
 };
 
-module.exports = Challenge2Reducer;
+export default Challenge2Reducer;

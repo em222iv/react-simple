@@ -4,7 +4,7 @@
   "description": "React course project",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server --hot --inline",
+    "start": "webpack --progress --colors",
     "build": "webpack --progress --colors"
   },
   "repository": {

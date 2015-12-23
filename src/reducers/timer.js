@@ -1,8 +1,9 @@
-var initialState = require('./../initial-state');
-var actions = require('./../actions');
+import initialState from './../initial-state';
+import actions from './../actions'
 
-var TimerReducer = function(state, action){
-    var newState = Object.assign({}, state);
+const TimerReducer = function(state, action){
+    const newState = Object.assign({}, state);
+
     switch(action.type){
         case 'TIME_INC1':
             newState.elapsed += 1;
@@ -24,4 +25,4 @@ var TimerReducer = function(state, action){
     }
 };
 
-module.exports = TimerReducer;
+export default TimerReducer;

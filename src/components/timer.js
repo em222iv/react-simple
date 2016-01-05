@@ -10,13 +10,20 @@ class Timer extends Component {
         this.props.setTime(this.props.startTime);
         switch (this.props.time) {
             case 'inc1':
-                this.setInterval(() => this.props.timeInc1(), 1000);
+                this.setInterval((time) => {this.props.timeInc1()}, 1000);
                 break;
             case 'inc10':
                 this.setInterval(() => this.props.timeInc10(), 1000);
                 break;
             case 'dec1':
-                this.setInterval(() => this.props.timeDec1(), 1000);
+                this.interval = this.setInterval(() => {
+                    console.log(this.props.elapse);
+                   if(this.props.elapse==0){
+                       this.clear();
+                       this.props.timerDone = true;
+                   }
+                    this.props.timeDec1() }, 1000
+                );
                 break;
             case 'dec10':
                 this.setInterval(() => this.props.timeDec10(), 1000);
@@ -25,9 +32,8 @@ class Timer extends Component {
                 throw new Error('Not a valid start time!');
         }
     }
-
-    elapser(elapser) {
-        this.setInterval(() => elapser, 1000);
+    clear() {
+        clearInterval(this.interval);
     }
 
     render() {
@@ -74,6 +80,9 @@ const mapDispatchToProps = (dispatch) => {
         },
         setTime: (time) => {
             dispatch(actions.setTimer(time));
+        },
+        stopTime: () => {
+            dispatch(actions.stopTimer());
         }
     };
 };

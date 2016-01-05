@@ -20,6 +20,9 @@ const TimerReducer = function(state, action){
         case 'SET_TIME':
             newState.elapsed = parseInt(action.timer);
             return newState;
+        case 'STOP_TIME':
+            newState.elapsed += 0;
+            return newState;
         default:
             return state || initialState().timer;
     }

@@ -23,7 +23,7 @@ class Challenge1 extends Component {
                     <h5 className="header col s12 light">Click the button as many times as possible!!!</h5>
                     <div className="col row s6 offset-s3 center">
                         <Points />
-                        <Timer time="dec1" startTime="25"/>
+                        <Timer time="dec1" startTime="5" timerDone="false" />
                     </div>
                 </div>
                 <div className="row center">
@@ -38,7 +38,6 @@ class Challenge1 extends Component {
 
 Challenge1.propTypes = {
     points: PropTypes.object.isRequired,
-    decrease: PropTypes.func.isRequired,
     increase: PropTypes.func.isRequired
 };
 
@@ -55,9 +54,6 @@ const mapDispatchToProps = (dispatch) => {
     return {
         increase: () => {
             dispatch(actions.pointsIncrease());
-        },
-        decrease: () => {
-            dispatch(actions.timeDecrease());
         }
     };
 };

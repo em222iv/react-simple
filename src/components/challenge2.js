@@ -15,9 +15,6 @@ class Challenge2 extends Component {
 
     componentWillMount() {
         this.props.points.currentValue = 500;
-    }
-
-    componentDidMount() {
         this.props.getWord();
     }
 
@@ -25,6 +22,7 @@ class Challenge2 extends Component {
         this.props.decrease();
         const a = this.props.worda.randomWord;
         const b = event.target.value;
+        const loader = $('#loader');
         if (a === b) {
             openModal();
         }
@@ -36,9 +34,7 @@ class Challenge2 extends Component {
                 equivalency++;
             }
         }
-
         const weight = equivalency / maxLength;
-        const loader = $('#loader');
         loader.css('width', (weight * 100) + '%');
     }
 
@@ -82,7 +78,6 @@ class Challenge2 extends Component {
                         </div>
                     </div>
                 </div>
-
                 <Modal />
             </div>
         );

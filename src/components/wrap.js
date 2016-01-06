@@ -16,7 +16,7 @@ class Wrap extends React.Component {
         return (
             <div>
                 <Nav/>
-                    {this.props.children}
+                {this.props.children}
             </div>
         );
     }

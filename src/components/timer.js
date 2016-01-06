@@ -16,10 +16,7 @@ class Timer extends Component {
                 break;
             case 'dec1':
                 this.interval = this.setInterval(() => {
-                    if(this.props.elapse==0){
-                       this.clear();
-                       this.props.current(this.props.nextChallenge);
-                    }
+                    if(this.props.elapse==0){this.challengeDone();}
                     this.props.timeDec1() }, 1000
                 );
                 break;
@@ -30,9 +27,9 @@ class Timer extends Component {
                 throw new Error('Not a valid start time!');
         }
     }
-    clear() {
+    challengeDone() {
         clearInterval(this.interval);
-
+        this.props.current(this.props.nextChallenge);
     }
 
     render() {

@@ -1,8 +1,6 @@
 import { connect } from 'react-redux';
 import React, { PropTypes, Component } from 'react';
-
 import actions from '../actions';
-import Modal from './modal';
 import Points from './points';
 import Timer from './timer';
 
@@ -26,7 +24,6 @@ class Challenge1 extends Component {
                     <a onClick={this.props.increase} id="download-button" className="btn-large waves-effect waves-light orange">CLICK! CLICK FOR GODS SAKES!!!</a>
                 </div>
             </div>
-                <Modal />
             </div>
         );
     }

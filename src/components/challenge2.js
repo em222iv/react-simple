@@ -1,17 +1,10 @@
 import { connect } from 'react-redux';
 import React, { Component, PropTypes } from 'react';
 import actions from '../actions';
-import Modal from './modal';
 import Points from './points';
 import Timer from './timer';
 import ReactMixin from 'react-mixin';
 import TimerMixin from 'react-timer-mixin';
-
-const openModal = () => {
-    $('#modal').openModal({
-        dismissible: false
-    });
-};
 
 class Challenge2 extends Component {
 
@@ -24,10 +17,8 @@ class Challenge2 extends Component {
         this.props.decrease();
         const a = this.props.worda.randomWord;
         const b = event.target.value;
-        const loader = $('#loader');
-        if (a === b) {
-            this.props.current('C3');
-        }
+        const loader = $(this.refs.loader);
+        if (a === b) {this.props.current('C3');}
         let equivalency = 0;
         const minLength = (a.length > b.length) ? b.length : a.length;
         const maxLength = (a.length < b.length) ? b.length : a.length;
@@ -53,7 +44,7 @@ class Challenge2 extends Component {
                     <div className="row center">
                         <h5 className="header col s12 light">Write a perfect copy of the text in the bottom of the box!</h5>
                         <div className="progress">
-                            <div id="loader" className="determinate" style={divStyle}></div>
+                            <div ref="loader" id="loader" className="determinate" style={divStyle}></div>
                         </div>
                         <div className="col row s6 offset-s3 center">
                             <Points />
@@ -79,7 +70,6 @@ class Challenge2 extends Component {
                         </div>
                     </div>
                 </div>
-                <Modal />
             </div>
         );
     }

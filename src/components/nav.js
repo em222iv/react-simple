@@ -6,6 +6,7 @@ import auth from '../auth';
 import Login from './login';
 
 class Nav extends Component {
+    //checks if user can be loggd in via token
     componentWillMount() {
         const user = {
             username: '',
@@ -17,13 +18,6 @@ class Nav extends Component {
                 this.props.login(user);
             }
         });
-    }
-
-    componentDidMount() {
-        if (!auth.loggedIn()) {
-            // The line bolow here do nothing except cause error in webpack. So out commended it.
-            // this.props.history.pushState(null, '/');
-        }
     }
 
     render() {
@@ -44,10 +38,6 @@ class Nav extends Component {
         );
     }
 }
-
-Nav.divStyle = {
-    left: -250
-};
 
 Nav.propTypes = {
     login: PropTypes.func.isRequired

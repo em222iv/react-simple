@@ -7,9 +7,15 @@ const PointsReducer = (state, action) => {
         case 'POINTS_INC':
             newState.currentValue += 1;
             return newState;
-        case 'POINTS_DEC':
-            newState.currentValue -= 1;
+        case 'POINTS_ZERO':
+            newState.currentValue = 0;
             return newState;
+        case 'POINTS_DEC':
+            if(newState.currentValue > 0) {
+                newState.currentValue -=1;
+            }
+            return newState;
+
         default:
             return state || initialState().points;
     }

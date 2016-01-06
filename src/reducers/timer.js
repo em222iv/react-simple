@@ -21,8 +21,8 @@ const TimerReducer = function(state, action){
             newState.elapsed = parseInt(action.timer);
             return newState;
         case 'STOP_TIME':
-            newState.elapsed += 0;
-            return newState;
+            //newState.elapsed += 0;
+            return newState.elapsed += 0;
         default:
             return state || initialState().timer;
     }

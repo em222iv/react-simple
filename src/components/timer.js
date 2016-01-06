@@ -2,7 +2,6 @@ import { connect } from 'react-redux';
 import React, { PropTypes, Component } from 'react';
 import ReactMixin from 'react-mixin';
 import TimerMixin from 'react-timer-mixin';
-
 import actions from '../actions';
 
 class Timer extends Component {
@@ -10,18 +9,17 @@ class Timer extends Component {
         this.props.setTime(this.props.startTime);
         switch (this.props.time) {
             case 'inc1':
-                this.setInterval((time) => {this.props.timeInc1()}, 1000);
+                this.setInterval(() => {this.props.timeInc1()}, 1000);
                 break;
             case 'inc10':
                 this.setInterval(() => this.props.timeInc10(), 1000);
                 break;
             case 'dec1':
                 this.interval = this.setInterval(() => {
-                    console.log(this.props.elapse);
-                   if(this.props.elapse==0){
+                    if(this.props.elapse==0){
                        this.clear();
-                       this.props.timerDone = true;
-                   }
+                       this.props.current(this.props.nextChallenge);
+                    }
                     this.props.timeDec1() }, 1000
                 );
                 break;
@@ -34,6 +32,7 @@ class Timer extends Component {
     }
     clear() {
         clearInterval(this.interval);
+
     }
 
     render() {
@@ -47,13 +46,15 @@ class Timer extends Component {
 
 Timer.propTypes = {
     startTime: PropTypes.string.isRequired,
+    nextChallenge: PropTypes.string.isRequired,
     time: PropTypes.string.isRequired,
     elapse: PropTypes.number.isRequired,
     setTime: PropTypes.func.isRequired,
     timeDec1: PropTypes.func.isRequired,
     timeInc1: PropTypes.func.isRequired,
     timeDec10: PropTypes.func.isRequired,
-    timeInc10: PropTypes.func.isRequired
+    timeInc10: PropTypes.func.isRequired,
+    current: PropTypes.func.isRequired
 };
 
 ReactMixin.onClass(Timer, TimerMixin);
@@ -81,8 +82,8 @@ const mapDispatchToProps = (dispatch) => {
         setTime: (time) => {
             dispatch(actions.setTimer(time));
         },
-        stopTime: () => {
-            dispatch(actions.stopTimer());
+        current: (chal) => {
+            dispatch(actions.currentChallenge(chal));
         }
     };
 };

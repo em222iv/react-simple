@@ -4,6 +4,8 @@ import actions from '../actions';
 import Modal from './modal';
 import Points from './points';
 import Timer from './timer';
+import ReactMixin from 'react-mixin';
+import TimerMixin from 'react-timer-mixin';
 
 const openModal = () => {
     $('#modal').openModal({
@@ -13,9 +15,9 @@ const openModal = () => {
 
 class Challenge2 extends Component {
 
-    componentWillMount() {
-        this.props.points.currentValue = 500;
+    componentDidMount() {
         this.props.getWord();
+        this.setInterval(() => {this.props.decrease()}, 3000);
     }
 
     handleChange(event) {
@@ -24,7 +26,7 @@ class Challenge2 extends Component {
         const b = event.target.value;
         const loader = $('#loader');
         if (a === b) {
-            openModal();
+            this.props.current('C3');
         }
         let equivalency = 0;
         const minLength = (a.length > b.length) ? b.length : a.length;
@@ -55,7 +57,6 @@ class Challenge2 extends Component {
                         </div>
                         <div className="col row s6 offset-s3 center">
                             <Points />
-                            <Timer time="inc1" startTime="0"/>
                         </div>
                     </div>
                     <div className="row">
@@ -85,12 +86,16 @@ class Challenge2 extends Component {
 }
 
 Challenge2.propTypes = {
+    nextChallenge: PropTypes.string.isRequired,
     game: PropTypes.object.isRequired,
     worda: PropTypes.object.isRequired,
     points: PropTypes.object.isRequired,
     decrease: PropTypes.func.isRequired,
-    getWord: PropTypes.func.isRequired
+    getWord: PropTypes.func.isRequired,
+    current: PropTypes.func.isRequired
 };
+
+ReactMixin.onClass(Challenge2, TimerMixin);
 
 const mapStateToProps = (state) => {
     return {
@@ -108,6 +113,9 @@ const mapDispatchToProps = (dispatch) => {
         },
         getWord: () => {
             dispatch(actions.getRndString());
+        },
+        current: (chal) => {
+            dispatch(actions.currentChallenge(chal));
         }
     };
 };

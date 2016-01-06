@@ -9,6 +9,9 @@ module.exports = function(){
         game: {
             ongoing: false
         },
+        currChallenge: {
+            challenge: 0
+        },
         timer: {
             elapsed: 0
         },

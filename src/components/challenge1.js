@@ -8,10 +8,6 @@ import Timer from './timer';
 
 class Challenge1 extends Component {
 
-    componentWillMount() {
-        this.props.points.currentValue = 0;
-    }
-
     render() {
         return (
             <div className="section no-pad-bot" id="index-banner">
@@ -23,7 +19,7 @@ class Challenge1 extends Component {
                     <h5 className="header col s12 light">Click the button as many times as possible!!!</h5>
                     <div className="col row s6 offset-s3 center">
                         <Points />
-                        <Timer time="dec1" startTime="5" timerDone="false" />
+                        <Timer time="dec1" startTime="5" nextChallenge="C2"/>
                     </div>
                 </div>
                 <div className="row center">
@@ -38,7 +34,9 @@ class Challenge1 extends Component {
 
 Challenge1.propTypes = {
     points: PropTypes.object.isRequired,
-    increase: PropTypes.func.isRequired
+    increase: PropTypes.func.isRequired,
+    current: PropTypes.func.isRequired
+
 };
 
 const mapStateToProps = (state) => {
@@ -54,6 +52,9 @@ const mapDispatchToProps = (dispatch) => {
     return {
         increase: () => {
             dispatch(actions.pointsIncrease());
+        },
+        current: (chal) => {
+            dispatch(actions.currentChallenge(chal));
         }
     };
 };

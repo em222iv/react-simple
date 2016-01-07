@@ -22,7 +22,7 @@ module.exports = {
     pointsZero: function(){
         return {type: 'POINTS_ZERO'};
     },
-    gameOngoing: function(){
+    gameOn: function(){
         return {type: 'GAME_ON'};
     },
     gameOff: function(){
@@ -50,8 +50,7 @@ module.exports = {
         console.log('df');
         return {type: 'STOP_TIME'};
     },
-    currentChallenge: function(chal){
-        console.log(chal);
+    changeChallenge: function(chal){
         return {type: chal};
     },
     getRndString: function() {

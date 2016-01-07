@@ -12,7 +12,7 @@ class Game extends Component {
 
     handleClick() {
         this.props.game();
-        this.props.current('C1');
+        this.props.nextChallenge('C1');
         this.props.zeroPoints();
     }
 
@@ -20,7 +20,7 @@ class Game extends Component {
         return (
             <div className="section no-pad-bot" id="index-banner">
                 <div className="container">
-                    {(!this.props.gamea
+                    {(!this.props.gameOn
                             ?    <div>
                             {(this.props.auth
                                     ? <h1 className="header center orange-text">Hello!</h1>
@@ -31,7 +31,7 @@ class Game extends Component {
                     )}
                     <div></div>
 
-                    {(!this.props.gamea && !this.props.auth
+                    {(!this.props.gameOn && !this.props.auth
                         ? <div></div>
                         : <div>{(() => {
                             switch (this.props.currentChallange) {
@@ -45,7 +45,7 @@ class Game extends Component {
                                 case 1:
                                     return <C1/>;
                                 case 2:
-                                    return <C2 nextChallenge="C3" />;
+                                    return <C2 nextChallenge="puzzleChallenge " />;
                             }
                         })()}</div>
                         )}
@@ -58,14 +58,14 @@ class Game extends Component {
 Game.propTypes = {
     auth: PropTypes.bool.isRequired,
     game: PropTypes.func.isRequired,
-    current: PropTypes.func.isRequired,
+    nextChallenge: PropTypes.func.isRequired,
     zeroPoints: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => {
     return {
         auth: state.login.auth,
-        gamea: state.game.ongoing,
+        gameOn: state.game.ongoing,
         currentChallange: state.currChallenge.challenge,
     }
 };
@@ -73,10 +73,10 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         game: () => {
-            dispatch(actions.gameOngoing());
+            dispatch(actions.gameOn());
         },
-        current: (chal) => {
-            dispatch(actions.currentChallenge(chal));
+        nextChallenge: (chal) => {
+            dispatch(actions.changeChallenge(chal));
         },
         zeroPoints: () => {
             dispatch(actions.pointsZero());

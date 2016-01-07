@@ -18,7 +18,7 @@ class Challenge2 extends Component {
         const a = this.props.worda.randomWord;
         const b = event.target.value;
         const loader = $(this.refs.loader);
-        if (a === b) {this.props.current('C3');}
+        if (a === b) {this.props.nextChallenge('C3');}
         let equivalency = 0;
         const minLength = (a.length > b.length) ? b.length : a.length;
         const maxLength = (a.length < b.length) ? b.length : a.length;
@@ -82,7 +82,7 @@ Challenge2.propTypes = {
     points: PropTypes.object.isRequired,
     decrease: PropTypes.func.isRequired,
     getWord: PropTypes.func.isRequired,
-    current: PropTypes.func.isRequired
+    nextChallenge: PropTypes.func.isRequired
 };
 
 ReactMixin.onClass(Challenge2, TimerMixin);
@@ -104,8 +104,8 @@ const mapDispatchToProps = (dispatch) => {
         getWord: () => {
             dispatch(actions.getRndString());
         },
-        current: (chal) => {
-            dispatch(actions.currentChallenge(chal));
+        nextChallenge: (chal) => {
+            dispatch(actions.changeChallenge(chal));
         }
     };
 };

@@ -30559,7 +30559,7 @@
 	    pointsZero: function pointsZero() {
 	        return { type: 'POINTS_ZERO' };
 	    },
-	    gameOngoing: function gameOngoing() {
+	    gameOn: function gameOn() {
 	        return { type: 'GAME_ON' };
 	    },
 	    gameOff: function gameOff() {
@@ -30587,8 +30587,7 @@
 	        console.log('df');
 	        return { type: 'STOP_TIME' };
 	    },
-	    currentChallenge: function currentChallenge(chal) {
-	        console.log(chal);
+	    changeChallenge: function changeChallenge(chal) {
 	        return { type: chal };
 	    },
 	    getRndString: function getRndString() {
@@ -30778,7 +30777,7 @@
 	
 	var _challenge2 = _interopRequireDefault(_challenge);
 	
-	var _game = __webpack_require__(434);
+	var _game = __webpack_require__(433);
 	
 	var _game2 = _interopRequireDefault(_game);
 	
@@ -31330,6 +31329,8 @@
 	
 	    _createClass(Nav, [{
 	        key: 'componentWillMount',
+	
+	        //checks if user can be loggd in via token
 	        value: function componentWillMount() {
 	            var _this2 = this;
 	
@@ -31343,14 +31344,6 @@
 	                    _this2.props.login(user);
 	                }
 	            });
-	        }
-	    }, {
-	        key: 'componentDidMount',
-	        value: function componentDidMount() {
-	            if (!_auth2.default.loggedIn()) {
-	                // The line bolow here do nothing except cause error in webpack. So out commended it.
-	                // this.props.history.pushState(null, '/');
-	            }
 	        }
 	    }, {
 	        key: 'render',
@@ -31395,10 +31388,6 @@
 	
 	    return Nav;
 	})(_react.Component);
-	
-	Nav.divStyle = {
-	    left: -250
-	};
 	
 	Nav.propTypes = {
 	    login: _react.PropTypes.func.isRequired
@@ -31592,15 +31581,11 @@
 	
 	var _actions2 = _interopRequireDefault(_actions);
 	
-	var _modal = __webpack_require__(430);
-	
-	var _modal2 = _interopRequireDefault(_modal);
-	
-	var _points = __webpack_require__(431);
+	var _points = __webpack_require__(430);
 	
 	var _points2 = _interopRequireDefault(_points);
 	
-	var _timer = __webpack_require__(432);
+	var _timer = __webpack_require__(431);
 	
 	var _timer2 = _interopRequireDefault(_timer);
 	
@@ -31608,7 +31593,7 @@
 	
 	var _reactMixin2 = _interopRequireDefault(_reactMixin);
 	
-	var _reactTimerMixin = __webpack_require__(433);
+	var _reactTimerMixin = __webpack_require__(432);
 	
 	var _reactTimerMixin2 = _interopRequireDefault(_reactTimerMixin);
 	
@@ -31619,12 +31604,6 @@
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var openModal = function openModal() {
-	    $('#modal').openModal({
-	        dismissible: false
-	    });
-	};
 	
 	var Challenge2 = (function (_Component) {
 	    _inherits(Challenge2, _Component);
@@ -31651,9 +31630,9 @@
 	            this.props.decrease();
 	            var a = this.props.worda.randomWord;
 	            var b = event.target.value;
-	            var loader = $('#loader');
+	            var loader = $(this.refs.loader);
 	            if (a === b) {
-	                this.props.current('C3');
+	                this.props.nextChallenge('C3');
 	            }
 	            var equivalency = 0;
 	            var minLength = a.length > b.length ? b.length : a.length;
@@ -31698,7 +31677,7 @@
 	                        _react2.default.createElement(
 	                            'div',
 	                            { className: 'progress' },
-	                            _react2.default.createElement('div', { id: 'loader', className: 'determinate', style: divStyle })
+	                            _react2.default.createElement('div', { ref: 'loader', id: 'loader', className: 'determinate', style: divStyle })
 	                        ),
 	                        _react2.default.createElement(
 	                            'div',
@@ -31749,8 +31728,7 @@
 	                            )
 	                        )
 	                    )
-	                ),
-	                _react2.default.createElement(_modal2.default, null)
+	                )
 	            );
 	        }
 	    }]);
@@ -31765,7 +31743,7 @@
 	    points: _react.PropTypes.object.isRequired,
 	    decrease: _react.PropTypes.func.isRequired,
 	    getWord: _react.PropTypes.func.isRequired,
-	    current: _react.PropTypes.func.isRequired
+	    nextChallenge: _react.PropTypes.func.isRequired
 	};
 	
 	_reactMixin2.default.onClass(Challenge2, _reactTimerMixin2.default);
@@ -31787,8 +31765,8 @@
 	        getWord: function getWord() {
 	            dispatch(_actions2.default.getRndString());
 	        },
-	        current: function current(chal) {
-	            dispatch(_actions2.default.currentChallenge(chal));
+	        nextChallenge: function nextChallenge(chal) {
+	            dispatch(_actions2.default.changeChallenge(chal));
 	        }
 	    };
 	};
@@ -31799,87 +31777,6 @@
 
 /***/ },
 /* 430 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/* REACT HOT LOADER */ if (false) { (function () { var ReactHotAPI = require("/Users/erikmagnusson/WebstormProjects/react-simple/node_modules/react-hot-api/modules/index.js"), RootInstanceProvider = require("/Users/erikmagnusson/WebstormProjects/react-simple/node_modules/react-hot-loader/RootInstanceProvider.js"), ReactMount = require("react/lib/ReactMount"), React = require("react"); module.makeHot = module.hot.data ? module.hot.data.makeHot : ReactHotAPI(function () { return RootInstanceProvider.getRootInstances(ReactMount); }, React); })(); } try { (function () {
-	
-	'use strict';
-	
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _react = __webpack_require__(192);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var Modal = (function (_Component) {
-	    _inherits(Modal, _Component);
-	
-	    function Modal() {
-	        _classCallCheck(this, Modal);
-	
-	        return _possibleConstructorReturn(this, Object.getPrototypeOf(Modal).apply(this, arguments));
-	    }
-	
-	    _createClass(Modal, [{
-	        key: 'componentWillMount',
-	        value: function componentWillMount() {
-	            $('#modal').leanModal({
-	                dismissible: false, // Modal can be dismissed by clicking outside of the modal
-	                opacity: 0.5, // Opacity of modal background
-	                in_duration: 300, // Transition in duration
-	                out_duration: 200 });
-	        }
-	    }, {
-	        key: 'render',
-	        // Transition out duration
-	        value: function render() {
-	            return _react2.default.createElement(
-	                'div',
-	                { id: 'modal', className: 'modal' },
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'modal-content' },
-	                    _react2.default.createElement(
-	                        'h4',
-	                        null,
-	                        'Grrrreeat!'
-	                    ),
-	                    _react2.default.createElement(
-	                        'p',
-	                        null,
-	                        'Stay alert, a new challenge is arising'
-	                    )
-	                ),
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'modal-footer' },
-	                    '*Maybe Countdown*'
-	                )
-	            );
-	        }
-	    }]);
-	
-	    return Modal;
-	})(_react.Component);
-	
-	exports.default = Modal;
-	
-	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("/Users/erikmagnusson/WebstormProjects/react-simple/node_modules/react-hot-loader/makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot not apply hot update to " + "modal.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
-
-/***/ },
-/* 431 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* REACT HOT LOADER */ if (false) { (function () { var ReactHotAPI = require("/Users/erikmagnusson/WebstormProjects/react-simple/node_modules/react-hot-api/modules/index.js"), RootInstanceProvider = require("/Users/erikmagnusson/WebstormProjects/react-simple/node_modules/react-hot-loader/RootInstanceProvider.js"), ReactMount = require("react/lib/ReactMount"), React = require("react"); module.makeHot = module.hot.data ? module.hot.data.makeHot : ReactHotAPI(function () { return RootInstanceProvider.getRootInstances(ReactMount); }, React); })(); } try { (function () {
@@ -31970,7 +31867,7 @@
 	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("/Users/erikmagnusson/WebstormProjects/react-simple/node_modules/react-hot-loader/makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot not apply hot update to " + "points.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
 
 /***/ },
-/* 432 */
+/* 431 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* REACT HOT LOADER */ if (false) { (function () { var ReactHotAPI = require("/Users/erikmagnusson/WebstormProjects/react-simple/node_modules/react-hot-api/modules/index.js"), RootInstanceProvider = require("/Users/erikmagnusson/WebstormProjects/react-simple/node_modules/react-hot-loader/RootInstanceProvider.js"), ReactMount = require("react/lib/ReactMount"), React = require("react"); module.makeHot = module.hot.data ? module.hot.data.makeHot : ReactHotAPI(function () { return RootInstanceProvider.getRootInstances(ReactMount); }, React); })(); } try { (function () {
@@ -31993,7 +31890,7 @@
 	
 	var _reactMixin2 = _interopRequireDefault(_reactMixin);
 	
-	var _reactTimerMixin = __webpack_require__(433);
+	var _reactTimerMixin = __webpack_require__(432);
 	
 	var _reactTimerMixin2 = _interopRequireDefault(_reactTimerMixin);
 	
@@ -32038,8 +31935,7 @@
 	                case 'dec1':
 	                    this.interval = this.setInterval(function () {
 	                        if (_this2.props.elapse == 0) {
-	                            _this2.clear();
-	                            _this2.props.current(_this2.props.nextChallenge);
+	                            _this2.challengeDone();
 	                        }
 	                        _this2.props.timeDec1();
 	                    }, 1000);
@@ -32054,9 +31950,10 @@
 	            }
 	        }
 	    }, {
-	        key: 'clear',
-	        value: function clear() {
+	        key: 'challengeDone',
+	        value: function challengeDone() {
 	            clearInterval(this.interval);
+	            this.props.current(this.props.nextChallenge);
 	        }
 	    }, {
 	        key: 'render',
@@ -32126,7 +32023,7 @@
 	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("/Users/erikmagnusson/WebstormProjects/react-simple/node_modules/react-hot-loader/makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot not apply hot update to " + "timer.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
 
 /***/ },
-/* 433 */
+/* 432 */
 /***/ function(module, exports) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/*
@@ -32224,7 +32121,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 434 */
+/* 433 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* REACT HOT LOADER */ if (false) { (function () { var ReactHotAPI = require("/Users/erikmagnusson/WebstormProjects/react-simple/node_modules/react-hot-api/modules/index.js"), RootInstanceProvider = require("/Users/erikmagnusson/WebstormProjects/react-simple/node_modules/react-hot-loader/RootInstanceProvider.js"), ReactMount = require("react/lib/ReactMount"), React = require("react"); module.makeHot = module.hot.data ? module.hot.data.makeHot : ReactHotAPI(function () { return RootInstanceProvider.getRootInstances(ReactMount); }, React); })(); } try { (function () {
@@ -32249,7 +32146,7 @@
 	
 	var _actions2 = _interopRequireDefault(_actions);
 	
-	var _challenge = __webpack_require__(435);
+	var _challenge = __webpack_require__(434);
 	
 	var _challenge2 = _interopRequireDefault(_challenge);
 	
@@ -32283,7 +32180,7 @@
 	        key: 'handleClick',
 	        value: function handleClick() {
 	            this.props.game();
-	            this.props.current('C1');
+	            this.props.nextChallenge('C1');
 	            this.props.zeroPoints();
 	        }
 	    }, {
@@ -32297,7 +32194,7 @@
 	                _react2.default.createElement(
 	                    'div',
 	                    { className: 'container' },
-	                    !this.props.gamea ? _react2.default.createElement(
+	                    !this.props.gameOn ? _react2.default.createElement(
 	                        'div',
 	                        null,
 	                        this.props.auth ? _react2.default.createElement(
@@ -32311,7 +32208,7 @@
 	                        )
 	                    ) : _react2.default.createElement('div', null),
 	                    _react2.default.createElement('div', null),
-	                    !this.props.gamea && !this.props.auth ? _react2.default.createElement('div', null) : _react2.default.createElement(
+	                    !this.props.gameOn && !this.props.auth ? _react2.default.createElement('div', null) : _react2.default.createElement(
 	                        'div',
 	                        null,
 	                        (function () {
@@ -32329,7 +32226,7 @@
 	                                case 1:
 	                                    return _react2.default.createElement(_challenge2.default, null);
 	                                case 2:
-	                                    return _react2.default.createElement(_challenge4.default, { nextChallenge: 'C3' });
+	                                    return _react2.default.createElement(_challenge4.default, { nextChallenge: 'puzzleChallenge ' });
 	                            }
 	                        })()
 	                    )
@@ -32344,14 +32241,14 @@
 	Game.propTypes = {
 	    auth: _react.PropTypes.bool.isRequired,
 	    game: _react.PropTypes.func.isRequired,
-	    current: _react.PropTypes.func.isRequired,
+	    nextChallenge: _react.PropTypes.func.isRequired,
 	    zeroPoints: _react.PropTypes.func.isRequired
 	};
 	
 	var mapStateToProps = function mapStateToProps(state) {
 	    return {
 	        auth: state.login.auth,
-	        gamea: state.game.ongoing,
+	        gameOn: state.game.ongoing,
 	        currentChallange: state.currChallenge.challenge
 	    };
 	};
@@ -32359,10 +32256,10 @@
 	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 	    return {
 	        game: function game() {
-	            dispatch(_actions2.default.gameOngoing());
+	            dispatch(_actions2.default.gameOn());
 	        },
-	        current: function current(chal) {
-	            dispatch(_actions2.default.currentChallenge(chal));
+	        nextChallenge: function nextChallenge(chal) {
+	            dispatch(_actions2.default.changeChallenge(chal));
 	        },
 	        zeroPoints: function zeroPoints() {
 	            dispatch(_actions2.default.pointsZero());
@@ -32375,7 +32272,7 @@
 	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("/Users/erikmagnusson/WebstormProjects/react-simple/node_modules/react-hot-loader/makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot not apply hot update to " + "game.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
 
 /***/ },
-/* 435 */
+/* 434 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* REACT HOT LOADER */ if (false) { (function () { var ReactHotAPI = require("/Users/erikmagnusson/WebstormProjects/react-simple/node_modules/react-hot-api/modules/index.js"), RootInstanceProvider = require("/Users/erikmagnusson/WebstormProjects/react-simple/node_modules/react-hot-loader/RootInstanceProvider.js"), ReactMount = require("react/lib/ReactMount"), React = require("react"); module.makeHot = module.hot.data ? module.hot.data.makeHot : ReactHotAPI(function () { return RootInstanceProvider.getRootInstances(ReactMount); }, React); })(); } try { (function () {
@@ -32398,15 +32295,11 @@
 	
 	var _actions2 = _interopRequireDefault(_actions);
 	
-	var _modal = __webpack_require__(430);
-	
-	var _modal2 = _interopRequireDefault(_modal);
-	
-	var _points = __webpack_require__(431);
+	var _points = __webpack_require__(430);
 	
 	var _points2 = _interopRequireDefault(_points);
 	
-	var _timer = __webpack_require__(432);
+	var _timer = __webpack_require__(431);
 	
 	var _timer2 = _interopRequireDefault(_timer);
 	
@@ -32457,7 +32350,7 @@
 	                            'div',
 	                            { className: 'col row s6 offset-s3 center' },
 	                            _react2.default.createElement(_points2.default, null),
-	                            _react2.default.createElement(_timer2.default, { time: 'dec1', startTime: '5', nextChallenge: 'C2' })
+	                            _react2.default.createElement(_timer2.default, { time: 'dec1', startTime: '25', nextChallenge: 'C2' })
 	                        )
 	                    ),
 	                    _react2.default.createElement(
@@ -32469,8 +32362,7 @@
 	                            'CLICK! CLICK FOR GODS SAKES!!!'
 	                        )
 	                    )
-	                ),
-	                _react2.default.createElement(_modal2.default, null)
+	                )
 	            );
 	        }
 	    }]);
@@ -32481,7 +32373,7 @@
 	Challenge1.propTypes = {
 	    points: _react.PropTypes.object.isRequired,
 	    increase: _react.PropTypes.func.isRequired,
-	    current: _react.PropTypes.func.isRequired
+	    nextChallenge: _react.PropTypes.func.isRequired
 	
 	};
 	
@@ -32499,8 +32391,8 @@
 	        increase: function increase() {
 	            dispatch(_actions2.default.pointsIncrease());
 	        },
-	        current: function current(chal) {
-	            dispatch(_actions2.default.currentChallenge(chal));
+	        nextChallenge: function nextChallenge(chal) {
+	            dispatch(_actions2.default.changeChallenge(chal));
 	        }
 	    };
 	};

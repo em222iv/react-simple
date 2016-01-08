@@ -1,5 +1,9 @@
 # react-simple
 Simple React Redux Application
+Playable at: http://em222iv.github.io/react-simple
+Login Credentials:
+user: test
+password: pass
 
 <p> this will be a application that presents challenges to the user</p>
 

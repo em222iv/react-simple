@@ -17,7 +17,7 @@ class Challenge1 extends Component {
                     <h5 className="header col s12 light">Click the button as many times as possible!!!</h5>
                     <div className="col row s6 offset-s3 center">
                         <Points />
-                        <Timer time="dec1" startTime="5" nextChallenge="C2"/>
+                        <Timer time="dec1" startTime="25" nextChallenge="C2"/>
                     </div>
                 </div>
                 <div className="row center">

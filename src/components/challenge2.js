@@ -14,11 +14,12 @@ class Challenge2 extends Component {
     }
 
     handleChange(event) {
+
         this.props.decrease();
         const a = this.props.worda.randomWord;
         const b = event.target.value;
         const loader = $(this.refs.loader);
-        if (a === b) {this.props.nextChallenge('C3');}
+        if (a === b || this.props.points.currentValue == 0) {this.props.nextChallenge('C0');this.props.gameOff();}
         let equivalency = 0;
         const minLength = (a.length > b.length) ? b.length : a.length;
         const maxLength = (a.length < b.length) ? b.length : a.length;
@@ -106,6 +107,9 @@ const mapDispatchToProps = (dispatch) => {
         },
         nextChallenge: (chal) => {
             dispatch(actions.changeChallenge(chal));
+        },
+        gameOff: (chal) => {
+            dispatch(actions.gameOff());
         }
     };
 };

@@ -31472,7 +31472,8 @@
 	        value: function handleLogout() {
 	            this.props.logout();
 	            this.props.gameOff();
-	            this.props.current('C0');
+	            this.props.nextChallenge('C0');
+	            this.props.zeroPoints();
 	        }
 	    }, {
 	        key: 'render',
@@ -31525,7 +31526,9 @@
 	    login: _react.PropTypes.func.isRequired,
 	    logout: _react.PropTypes.func.isRequired,
 	    gameOff: _react.PropTypes.func.isRequired,
-	    current: _react.PropTypes.func.isRequired
+	    nextChallenge: _react.PropTypes.func.isRequired,
+	    zeroPoints: _react.PropTypes.func.isRequired
+	
 	};
 	
 	Login.divStyle = {
@@ -31547,8 +31550,11 @@
 	        gameOff: function gameOff() {
 	            dispatch(_actions2.default.gameOff());
 	        },
-	        current: function current(chal) {
-	            dispatch(_actions2.default.currentChallenge(chal));
+	        nextChallenge: function nextChallenge(chal) {
+	            dispatch(_actions2.default.changeChallenge(chal));
+	        },
+	        zeroPoints: function zeroPoints() {
+	            dispatch(_actions2.default.pointsZero());
 	        }
 	    };
 	};
@@ -31627,12 +31633,13 @@
 	    }, {
 	        key: 'handleChange',
 	        value: function handleChange(event) {
+	
 	            this.props.decrease();
 	            var a = this.props.worda.randomWord;
 	            var b = event.target.value;
 	            var loader = $(this.refs.loader);
-	            if (a === b) {
-	                this.props.nextChallenge('C3');
+	            if (a === b || this.props.points.currentValue == 0) {
+	                this.props.nextChallenge('C0');this.props.gameOff();
 	            }
 	            var equivalency = 0;
 	            var minLength = a.length > b.length ? b.length : a.length;
@@ -31767,6 +31774,9 @@
 	        },
 	        nextChallenge: function nextChallenge(chal) {
 	            dispatch(_actions2.default.changeChallenge(chal));
+	        },
+	        gameOff: function gameOff(chal) {
+	            dispatch(_actions2.default.gameOff());
 	        }
 	    };
 	};
@@ -32194,13 +32204,13 @@
 	                _react2.default.createElement(
 	                    'div',
 	                    { className: 'container' },
-	                    !this.props.gameOn ? _react2.default.createElement(
+	                    !this.props.gameOngoing ? _react2.default.createElement(
 	                        'div',
 	                        null,
 	                        this.props.auth ? _react2.default.createElement(
 	                            'h1',
 	                            { className: 'header center orange-text' },
-	                            'Hello!'
+	                            'Play the game!!'
 	                        ) : _react2.default.createElement(
 	                            'h1',
 	                            { className: 'header center orange-text' },
@@ -32208,7 +32218,25 @@
 	                        )
 	                    ) : _react2.default.createElement('div', null),
 	                    _react2.default.createElement('div', null),
-	                    !this.props.gameOn && !this.props.auth ? _react2.default.createElement('div', null) : _react2.default.createElement(
+	                    this.props.points.currentValue > 0 && !this.props.gameOngoing ? _react2.default.createElement(
+	                        'div',
+	                        null,
+	                        this.props.auth ? _react2.default.createElement(
+	                            'h5',
+	                            { className: 'header center orange-text' },
+	                            'Your score was: ',
+	                            this.props.points.currentValue
+	                        ) : _react2.default.createElement('div', null)
+	                    ) : _react2.default.createElement(
+	                        'div',
+	                        null,
+	                        this.props.auth && !this.props.gameOngoing ? _react2.default.createElement(
+	                            'h5',
+	                            { className: 'header center orange-text' },
+	                            'play to get a score'
+	                        ) : _react2.default.createElement('div', null)
+	                    ),
+	                    !this.props.gameOngoing && !this.props.auth ? _react2.default.createElement('div', null) : _react2.default.createElement(
 	                        'div',
 	                        null,
 	                        (function () {
@@ -32248,8 +32276,9 @@
 	var mapStateToProps = function mapStateToProps(state) {
 	    return {
 	        auth: state.login.auth,
-	        gameOn: state.game.ongoing,
-	        currentChallange: state.currChallenge.challenge
+	        gameOngoing: state.game.ongoing,
+	        currentChallange: state.currChallenge.challenge,
+	        points: state.points
 	    };
 	};
 	
@@ -32257,6 +32286,9 @@
 	    return {
 	        game: function game() {
 	            dispatch(_actions2.default.gameOn());
+	        },
+	        gameOff: function gameOff() {
+	            dispatch(_actions2.default.gameOff());
 	        },
 	        nextChallenge: function nextChallenge(chal) {
 	            dispatch(_actions2.default.changeChallenge(chal));
@@ -32350,7 +32382,7 @@
 	                            'div',
 	                            { className: 'col row s6 offset-s3 center' },
 	                            _react2.default.createElement(_points2.default, null),
-	                            _react2.default.createElement(_timer2.default, { time: 'dec1', startTime: '5', nextChallenge: 'C2' })
+	                            _react2.default.createElement(_timer2.default, { time: 'dec1', startTime: '25', nextChallenge: 'C2' })
 	                        )
 	                    ),
 	                    _react2.default.createElement(

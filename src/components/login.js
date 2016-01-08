@@ -19,7 +19,8 @@ class Login extends Component {
     handleLogout() {
         this.props.logout();
         this.props.gameOff();
-        this.props.current('C0');
+        this.props.nextChallenge('C0');
+        this.props.zeroPoints();
     }
 
     render() {
@@ -55,7 +56,9 @@ Login.propTypes = {
     login: PropTypes.func.isRequired,
     logout: PropTypes.func.isRequired,
     gameOff: PropTypes.func.isRequired,
-    current: PropTypes.func.isRequired
+    nextChallenge: PropTypes.func.isRequired,
+    zeroPoints: PropTypes.func.isRequired,
+
 };
 
 Login.divStyle = {
@@ -77,9 +80,12 @@ const mapDispatchToProps = (dispatch) => {
         gameOff: () => {
             dispatch(actions.gameOff());
         },
-        current: (chal) => {
-            dispatch(actions.currentChallenge(chal));
-        }
+        nextChallenge: (chal) => {
+            dispatch(actions.changeChallenge(chal));
+        },
+        zeroPoints: () => {
+            dispatch(actions.pointsZero());
+        },
     };
 };
 

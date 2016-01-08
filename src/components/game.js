@@ -8,6 +8,7 @@ import C2 from './challenge2';
 class Game extends Component {
     componentDidMount() {
         console.log(this.props.currentChallange);
+
     }
 
     handleClick() {
@@ -20,18 +21,29 @@ class Game extends Component {
         return (
             <div className="section no-pad-bot" id="index-banner">
                 <div className="container">
-                    {(!this.props.gameOn
+                    {(!this.props.gameOngoing
                             ?    <div>
                             {(this.props.auth
-                                    ? <h1 className="header center orange-text">Hello!</h1>
+                                    ? <h1 className="header center orange-text">Play the game!!</h1>
                                     : <h1 className="header center orange-text">Login!</h1>
                             )}
                         </div>
                             : <div></div>
                     )}
                     <div></div>
-
-                    {(!this.props.gameOn && !this.props.auth
+                    {(this.props.points.currentValue > 0 && !this.props.gameOngoing
+                            ?    <div>
+                            {(this.props.auth
+                                    ? <h5 className="header center orange-text">Your score was: {this.props.points.currentValue}</h5>
+                                    : <div></div>
+                            )}
+                        </div>
+                            : <div>{(this.props.auth && !this.props.gameOngoing
+                                ? <h5 className="header center orange-text">play to get a score</h5>
+                                : <div></div>
+                        )}</div>
+                    )}
+                    {(!this.props.gameOngoing && !this.props.auth
                         ? <div></div>
                         : <div>{(() => {
                             switch (this.props.currentChallange) {
@@ -65,8 +77,9 @@ Game.propTypes = {
 const mapStateToProps = (state) => {
     return {
         auth: state.login.auth,
-        gameOn: state.game.ongoing,
+        gameOngoing: state.game.ongoing,
         currentChallange: state.currChallenge.challenge,
+        points: state.points
     }
 };
 
@@ -74,6 +87,9 @@ const mapDispatchToProps = (dispatch) => {
     return {
         game: () => {
             dispatch(actions.gameOn());
+        },
+        gameOff: () => {
+            dispatch(actions.gameOff());
         },
         nextChallenge: (chal) => {
             dispatch(actions.changeChallenge(chal));

@@ -31953,7 +31953,7 @@
 	        key: 'challengeDone',
 	        value: function challengeDone() {
 	            clearInterval(this.interval);
-	            this.props.current(this.props.nextChallenge);
+	            this.props.changingChallenge(this.props.nextChallenge);
 	        }
 	    }, {
 	        key: 'render',
@@ -31984,7 +31984,7 @@
 	    timeInc1: _react.PropTypes.func.isRequired,
 	    timeDec10: _react.PropTypes.func.isRequired,
 	    timeInc10: _react.PropTypes.func.isRequired,
-	    current: _react.PropTypes.func.isRequired
+	    changingChallenge: _react.PropTypes.func.isRequired
 	};
 	
 	_reactMixin2.default.onClass(Timer, _reactTimerMixin2.default);
@@ -32012,8 +32012,8 @@
 	        setTime: function setTime(time) {
 	            dispatch(_actions2.default.setTimer(time));
 	        },
-	        current: function current(chal) {
-	            dispatch(_actions2.default.currentChallenge(chal));
+	        changingChallenge: function changingChallenge(chal) {
+	            dispatch(_actions2.default.changeChallenge(chal));
 	        }
 	    };
 	};
@@ -32350,7 +32350,7 @@
 	                            'div',
 	                            { className: 'col row s6 offset-s3 center' },
 	                            _react2.default.createElement(_points2.default, null),
-	                            _react2.default.createElement(_timer2.default, { time: 'dec1', startTime: '25', nextChallenge: 'C2' })
+	                            _react2.default.createElement(_timer2.default, { time: 'dec1', startTime: '5', nextChallenge: 'C2' })
 	                        )
 	                    ),
 	                    _react2.default.createElement(

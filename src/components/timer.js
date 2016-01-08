@@ -29,7 +29,7 @@ class Timer extends Component {
     }
     challengeDone() {
         clearInterval(this.interval);
-        this.props.current(this.props.nextChallenge);
+        this.props.changingChallenge(this.props.nextChallenge);
     }
 
     render() {
@@ -51,7 +51,7 @@ Timer.propTypes = {
     timeInc1: PropTypes.func.isRequired,
     timeDec10: PropTypes.func.isRequired,
     timeInc10: PropTypes.func.isRequired,
-    current: PropTypes.func.isRequired
+    changingChallenge: PropTypes.func.isRequired
 };
 
 ReactMixin.onClass(Timer, TimerMixin);
@@ -79,8 +79,8 @@ const mapDispatchToProps = (dispatch) => {
         setTime: (time) => {
             dispatch(actions.setTimer(time));
         },
-        current: (chal) => {
-            dispatch(actions.currentChallenge(chal));
+        changingChallenge: (chal) => {
+            dispatch(actions.changeChallenge(chal));
         }
     };
 };

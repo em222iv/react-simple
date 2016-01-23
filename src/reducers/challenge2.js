@@ -1,9 +1,10 @@
 import initialState from './../initial-state';
+import C from '../constants';
 
-const Challenge2Reducer = function(state, action){
+const Challenge2Reducer = (state, action)=> {
     const newState = Object.assign({}, state);
-    switch(action.type){
-        case 'RND_SENTENCE':
+    switch (action.type) {
+        case C.RND_SENTENCE:
             console.log('rnd_s');
             newState.randomWord = action.wordieWord;
             return newState;

@@ -1,7 +1,10 @@
-module.exports = function(){
+export default ()=>{
     return {
         login: {
-            auth: false
+            users: [
+                {username: 'test', password: 'pass'}
+            ],
+            auth: null
         },
         points: {
             currentValue: 0

@@ -9,27 +9,8 @@
     </head>
     <body>
         <div id="app"></div>
-        <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+        <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
         <script type="text/javascript" src="style/materialize/js/materialize.min.js"></script>
         <script type="text/javascript" src="bundle.js"></script>
-        <script>
-            $(document).ready(function(){
-                $('.dropdown-button').dropdown({
-                        inDuration: 300,
-                        outDuration: 25,
-                        constrain_width: false,
-                        hover: false,
-                        gutter: 0,
-                        belowOrigin: true,
-                        closeOnClick: false,
-                        toggleOnClick: false
-                    }
-                );
-                $(".noCollaplse").click(function(ev) {
-                    $(".noCollaplse").dropdown("toggle");
-                    return false;
-                });
-            });
-        </script>
     </body>
 </html>

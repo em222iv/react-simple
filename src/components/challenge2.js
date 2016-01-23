@@ -7,19 +7,22 @@ import ReactMixin from 'react-mixin';
 import TimerMixin from 'react-timer-mixin';
 
 class Challenge2 extends Component {
-
     componentDidMount() {
         this.props.getWord();
-        this.setInterval(() => {this.props.decrease()}, 3000);
+        this.setInterval(() => {
+            this.props.decrease()
+        }, 3000);
     }
 
     handleChange(event) {
-
         this.props.decrease();
         const a = this.props.worda.randomWord;
         const b = event.target.value;
         const loader = $(this.refs.loader);
-        if (a === b || this.props.points.currentValue == 0) {this.props.nextChallenge('C0');this.props.gameOff();}
+        if (a === b || this.props.points.currentValue == 0) {
+            this.props.nextChallenge('C0');
+            this.props.gameOff();
+        }
         let equivalency = 0;
         const minLength = (a.length > b.length) ? b.length : a.length;
         const maxLength = (a.length < b.length) ? b.length : a.length;
@@ -40,10 +43,11 @@ class Challenge2 extends Component {
             <div className="section no-pad-bot" id="index-banner">
                 <div className="container">
                     <div>
-                       <h1 className="header center orange-text">TYPE TYPE TYPE</h1>
+                        <h1 className="header center orange-text">TYPE TYPE TYPE</h1>
                     </div>
                     <div className="row center">
-                        <h5 className="header col s12 light">Write a perfect copy of the text in the bottom of the box!</h5>
+                        <h5 className="header col s12 light">Write a perfect copy of the text in the bottom of the
+                            box!</h5>
                         <div className="progress">
                             <div ref="loader" id="loader" className="determinate" style={divStyle}></div>
                         </div>
@@ -58,7 +62,8 @@ class Challenge2 extends Component {
                                     <form className="col s12">
                                         <div className="row">
                                             <div className="input-field col s12">
-                                                <textarea onChange={this.handleChange.bind(this)} id="textarea1" className="materialize-textarea"></textarea>
+                                                <textarea onChange={this.handleChange.bind(this)} id="textarea1"
+                                                          className="materialize-textarea"></textarea>
                                                 <label htmlFor="textarea1">Type here!</label>
                                             </div>
                                         </div>
@@ -82,8 +87,7 @@ Challenge2.propTypes = {
     worda: PropTypes.object.isRequired,
     points: PropTypes.object.isRequired,
     decrease: PropTypes.func.isRequired,
-    getWord: PropTypes.func.isRequired,
-    nextChallenge: PropTypes.func.isRequired
+    getWord: PropTypes.func.isRequired
 };
 
 ReactMixin.onClass(Challenge2, TimerMixin);

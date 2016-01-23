@@ -23,14 +23,11 @@ class Nav extends Component {
     render() {
         return (
             <div>
-                <Login/>
                 <nav>
                     <div className="container">
                         <div className="nav-wrapper">
-                            <a href="#" className="brand-logo">Logo</a>
-                            <ul id="nav-mobile" className="right hide-on-med-and-down">
-                                <li><a className="dropdown-button" href="#" data-activates="dropdown1">Get started</a></li>
-                            </ul>
+                            <a href="#" style={{fontSize: '3rem'}}>Logo</a>
+                            <a href="#" onClick={this.props.logout}>Logout</a>
                         </div>
                     </div>
                 </nav>

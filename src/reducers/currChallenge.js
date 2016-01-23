@@ -1,9 +1,9 @@
 import initialState from'./../initial-state';
 
-const CurrChallangeReducer = function(state, action){
+const CurrChallangeReducer = (state, action)=> {
     const newState = Object.assign({}, state);
 
-    switch(action.type){
+    switch (action.type) {
         case 'C0':
             newState.challenge = 0;
             return newState;

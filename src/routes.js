@@ -7,6 +7,5 @@ import Game from './components/game';
 
 export const routes = (
     <Route path="/" component={Wrap}>
-        <IndexRoute component={Game}/>
     </Route>
 );

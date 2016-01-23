@@ -5,7 +5,6 @@ import Points from './points';
 import Timer from './timer';
 
 class Challenge1 extends Component {
-
     render() {
         return (
             <div className="section no-pad-bot" id="index-banner">
@@ -33,7 +32,6 @@ Challenge1.propTypes = {
     points: PropTypes.object.isRequired,
     increase: PropTypes.func.isRequired,
     nextChallenge: PropTypes.func.isRequired
-
 };
 
 const mapStateToProps = (state) => {

@@ -1,16 +1,17 @@
 import initialState from '../initial-state';
+import C from '../constants';
 
 const PointsReducer = (state, action) => {
     const newState = Object.assign({}, state);
 
     switch (action.type) {
-        case 'POINTS_INC':
+        case C.POINTS_INC:
             newState.currentValue += 1;
             return newState;
-        case 'POINTS_ZERO':
+        case C.POINTS_ZERO:
             newState.currentValue = 0;
             return newState;
-        case 'POINTS_DEC':
+        case C.POINTS_DEC:
             if(newState.currentValue > 0) {
                 newState.currentValue -=1;
             }

@@ -8,7 +8,6 @@ import C2 from './challenge2';
 class Game extends Component {
     componentDidMount() {
         console.log(this.props.currentChallange);
-
     }
 
     handleClick() {
@@ -18,57 +17,52 @@ class Game extends Component {
     }
 
     render() {
+        const headerText = this.props.auth ? "Play the game!!" : "Login!";
+        const header = (!this.props.gameOngoing ?
+            <div> {<h1 className="header center orange-text">{headerText}</h1>}</div>
+            : <div></div>);
+
+        const scoreWas = this.props.auth ? <h5 className="header center orange-text">Your score
+            was: {this.props.points.currentValue}</h5> : '';
+        const playToGetAScore = (this.props.auth && !this.props.gameOngoing
+            ? <h5 className="header center orange-text">play to get a score</h5> : '');
+        const currentValueAndNotOnGoing = (this.props.points.currentValue > 0 && !this.props.gameOngoing);
+        const scorePart = currentValueAndNotOnGoing ? <div>{scoreWas}</div>
+            : <div>{playToGetAScore}</div>;
+
+        const startButton = (this.props.auth
+                ? <div onClick={this.handleClick.bind(this)} id="download-button"
+                       className="btn-large waves-effect waves-light orange">Start</div>
+                : <div></div>
+        );
+        const challengePart = (()=> {
+            switch (this.props.currentChallange) {
+                case 0:
+                    return <div className="row center">
+                        {startButton}
+                    </div>;
+                case 1:
+                    return <C1 />;
+                case 2:
+                    return <C2 nextChallenge="puzzleChallenge "/>;
+            }
+        })();
+        const challenge = (!this.props.auth && !this.props.gameOngoing
+                ? ''
+                : <div>{challengePart}</div>
+        );
         return (
             <div className="section no-pad-bot" id="index-banner">
-                <div className="container">
-                    {(!this.props.gameOngoing
-                            ?    <div>
-                            {(this.props.auth
-                                    ? <h1 className="header center orange-text">Play the game!!</h1>
-                                    : <h1 className="header center orange-text">Login!</h1>
-                            )}
-                        </div>
-                            : <div></div>
-                    )}
-                    <div></div>
-                    {(this.props.points.currentValue > 0 && !this.props.gameOngoing
-                            ?    <div>
-                            {(this.props.auth
-                                    ? <h5 className="header center orange-text">Your score was: {this.props.points.currentValue}</h5>
-                                    : <div></div>
-                            )}
-                        </div>
-                            : <div>{(this.props.auth && !this.props.gameOngoing
-                                ? <h5 className="header center orange-text">play to get a score</h5>
-                                : <div></div>
-                        )}</div>
-                    )}
-                    {(!this.props.gameOngoing && !this.props.auth
-                        ? <div></div>
-                        : <div>{(() => {
-                            switch (this.props.currentChallange) {
-                                case 0:
-                                    return <div className="row center">
-                                        {(this.props.auth
-                                                ? <div onClick={this.handleClick.bind(this)} id="download-button" className="btn-large waves-effect waves-light orange">Start</div>
-                                                : <div></div>
-                                        )}
-                                    </div>;
-                                case 1:
-                                    return <C1/>;
-                                case 2:
-                                    return <C2 nextChallenge="puzzleChallenge " />;
-                            }
-                        })()}</div>
-                        )}
-                </div>
+                    {header}
+                    {scorePart}
+                    {challenge}
             </div>
         );
     }
 }
 
 Game.propTypes = {
-    auth: PropTypes.bool.isRequired,
+    auth: PropTypes.object,
     game: PropTypes.func.isRequired,
     nextChallenge: PropTypes.func.isRequired,
     zeroPoints: PropTypes.func.isRequired
@@ -96,7 +90,7 @@ const mapDispatchToProps = (dispatch) => {
         },
         zeroPoints: () => {
             dispatch(actions.pointsZero());
-        },
+        }
     };
 };
 

@@ -1,2 +1,2 @@
 createBrowserHistory = ('history/lib/createBrowserHistory');
-module.exports = createBrowserHistory;
+export default createBrowserHistory;

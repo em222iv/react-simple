@@ -25,40 +25,26 @@ class Login extends Component {
 
     render() {
         return (
-            <ul id="dropdown1" style={this.divStyle} className="dropdown-content">
-                <li><a href="#">Home</a></li>
-                <li className="divider"></li>
-                <li className="noCollaplse">
-                    {(this.props.auth
-                          ? <div></div>
-                          : <input ref="username" id="username" type="text" placeholder="admin" className="validate"/>
-                    )}
-                </li>
-                <li className="noCollaplse">
-                    {(this.props.auth
-                          ? <div></div>
-                          : <input ref="password" id="password" type="password" placeholder="password" className="validate"/>
-                    )}
-                </li>
-                <li>
-                    {(this.props.auth
-                          ? <Link to="/" href="#" onClick={this.handleLogout.bind(this)}>logout</Link>
-                          : <Link to="/" onClick={this.handleLogin.bind(this)}>login</Link>
-                    )}
-                </li>
-            </ul>
+            <div><input ref="username" id="username" type="text" placeholder="admin"
+                        className="validate"/>
+                <input ref="password" id="password" type="password"
+                       placeholder="password"
+                       className="validate"/>
+                <button
+                    onClick={this.handleLogin.bind(this)}>login
+                </button>
+            </div>
         );
     }
 }
 
 Login.propTypes = {
-    auth: PropTypes.bool.isRequired,
+    auth: PropTypes.object,
     login: PropTypes.func.isRequired,
     logout: PropTypes.func.isRequired,
     gameOff: PropTypes.func.isRequired,
     nextChallenge: PropTypes.func.isRequired,
-    zeroPoints: PropTypes.func.isRequired,
-
+    zeroPoints: PropTypes.func.isRequired
 };
 
 Login.divStyle = {
@@ -66,7 +52,7 @@ Login.divStyle = {
 };
 
 const mapStateToProps = (state) => {
-    return state.login;
+    return {auth: state.login.auth};
 };
 
 const mapDispatchToProps = (dispatch) => {
@@ -85,7 +71,7 @@ const mapDispatchToProps = (dispatch) => {
         },
         zeroPoints: () => {
             dispatch(actions.pointsZero());
-        },
+        }
     };
 };
 

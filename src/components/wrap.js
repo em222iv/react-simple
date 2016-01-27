@@ -4,6 +4,9 @@ import React, { PropTypes } from 'react';
 import ReactMixin from 'react-mixin';
 import auth from '../auth';
 import Nav from './nav';
+import Game from './game';
+import SignUp from './signup';
+import Login from './login';
 
 class Wrap extends React.Component {
     componentDidMount() {
@@ -16,7 +19,9 @@ class Wrap extends React.Component {
         return (
             <div>
                 <Nav/>
-                {this.props.children}
+                <div className="container">
+                    {auth.loggedIn() ? <Game /> : <div><SignUp history={this.props.history}/><Login /></div>}
+                </div>
             </div>
         );
     }
